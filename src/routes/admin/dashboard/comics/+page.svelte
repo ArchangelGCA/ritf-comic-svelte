@@ -1,9 +1,11 @@
 <script>
     import {deserialize} from "$app/forms";
     import {invalidateAll} from "$app/navigation";
+    import {toast} from "svelte-sonner";
 
     export let data;
-    const { comics } = data;
+    let { comics } = data;
+    $: ({ comics } = data);
 
     let previewUrl = '';
     let fileName = '';
@@ -23,6 +25,8 @@
 
         const formData = new FormData(e.target);
 
+        toast.info('Creating comic...');
+
         const response = await fetch('?/create', {
             method: 'POST',
             body: formData
@@ -31,16 +35,16 @@
         const result = deserialize(await response.text());
         if (result.type === 'success'){
             if (result.data.status === 200 || result.data.status === 303){
-                alert(result.data.body.message);
+                toast.success(result.data.body.message);
                 previewUrl = '';
                 fileName = '';
                 e.target.reset();
-                await invalidateAll();
+                await invalidateAll(); // TODO: Test again
             } else {
-                alert(result.data.body.message);
+                toast.warning(result.data.body.message);
             }
         } else {
-            alert('Something went wrong...');
+            toast.error('Something went wrong...');
         }
 
         isCreating = false;
@@ -69,7 +73,7 @@
         if (files.length > 0) {
             // Check if file is an image, if not return
             if (!files[0].type.startsWith('image/')) {
-                alert('Please upload an image file!');
+                toast.warning('Please upload an image file!');
                 return;
             }
             loadImagePreview({ target: { files: [files[0]] } });
@@ -97,7 +101,7 @@
         if (files.length > 0) {
             // Check if file is an image, if not return
             if (!files[0].type.startsWith('image/')) {
-                alert('Please upload an image file!');
+                toast.warning('Please upload an image file!');
                 return;
             }
             loadBannerPreview({ target: { files: [files[0]] } });

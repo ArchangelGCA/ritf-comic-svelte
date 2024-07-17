@@ -7,7 +7,7 @@
         index="false"
 />
 
-<div class="container-fluid px-0">
+<div class="container-fluid">
     <div class="row">
         <div class="col-5 col-md-2 bg-dark bg-opacity-25 text-white" style="min-height: 100vh;">
             <p class="h4 text-start ms-3 mt-3 mb-0">Admin</p>
