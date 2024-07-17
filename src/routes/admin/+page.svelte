@@ -73,12 +73,13 @@
 <style>
     .btn-outline-warning {
         border: 1px solid transparent;
-        color: var(--accent-color);
+        color: #fff;
         transition: all 0.3s;
     }
 
     .btn-outline-warning:hover {
         border: 1px solid var(--accent-color);
+        color: var(--accent-color);
         background: rgba(255, 255, 255, 0.15) !important;
     }
 </style>
