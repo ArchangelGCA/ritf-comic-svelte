@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit'
 
-export const load = async ({ params, locals: { user } }) => {
+export const load = async ({ locals: { user } }) => {
     if (!user){
         throw redirect(303, '/admin');
     }

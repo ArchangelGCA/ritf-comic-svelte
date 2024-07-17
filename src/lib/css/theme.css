@@ -31,7 +31,7 @@ body {
 
 /* hover, focus, active */
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    background-color: var(--btn-primary-hover);
+    background-color: var(--btn-primary-hover) !important;
     border-color: var(--btn-primary-hover);
 }
 
@@ -43,6 +43,17 @@ body {
 .btn-secondary {
     background-color: var(--secondary-color);
     border-color: var(--secondary-color);
+}
+
+.btn-outline-primary {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active {
+    color: var(--text-color);
+    background-color: var(--primary-color);
+    border-color: var(--primary-color) !important;
 }
 
 .text-primary {

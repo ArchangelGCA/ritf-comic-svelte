@@ -59,7 +59,7 @@
                     <label for="password" class="form-label">Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary w-100">Login</button>
+                <button type="submit" class="btn btn-lg btn-outline-warning bg-light bg-opacity-10 w-100">Login</button>
                 {#if statusMessage && statusMessage !== ""}
                     <div class="alert {statusMessageSuccess ? 'alert-success' : 'alert-danger'} mt-3 mb-0" role="alert">
                         {statusMessage}
@@ -69,3 +69,16 @@
         </div>
     </div>
 </div>
+
+<style>
+    .btn-outline-warning {
+        border: 1px solid transparent;
+        color: var(--accent-color);
+        transition: all 0.3s;
+    }
+
+    .btn-outline-warning:hover {
+        border: 1px solid var(--accent-color);
+        background: rgba(255, 255, 255, 0.15) !important;
+    }
+</style>

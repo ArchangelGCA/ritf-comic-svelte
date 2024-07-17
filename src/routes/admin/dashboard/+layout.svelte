@@ -3,7 +3,8 @@
     import Seo from "sk-seo";
 </script>
 
-<Seo index="false"
+<Seo
+        index="false"
 />
 
 <div class="container-fluid px-0">
