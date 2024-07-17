@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap'); /* Import your font from Google fonts if you wish */
+
+/* By default, the theme is Dark-Black */
+:root {
+    --bg-color: #01130e;
+    --text-color: #fff;
+    --primary-color: #9b0eea;
+    --secondary-color: #1cc3b0;
+    --tertiary-color: #484a43;
+    --accent-color: #ff00ff;
+    --success-color: #0aa379;
+    --warning-color: #edfa2a;
+    --error-color: #66025e;
+    --surface-color: #01130e;
+    --btn-primary-hover: #7c0cba;
+}
+
+/* DO NOT EDIT CONTENT BELOW THIS, IT IS FOR BOOTSTRAP (workaround to apply custom colors) */
+
+body {
+    font-family: "Montserrat", sans-serif !important; /* Apply your custom font import previously (top of this file) */
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    border-radius: 0.65rem;
+}
+
+/* hover, focus, active */
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover);
+}
+
+.btn:hover, .btn:focus, .btn:active {
+    background-color: var(--secondary-color);
+    border-radius: 0.65rem;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: var(--text-color);
+}
+
+.navbar, .modal-content, .card {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+
+.alert-success {
+    background-color: var(--success-color);
+    color: var(--text-color);
+}
+
+.alert-warning {
+    background-color: var(--warning-color);
+    color: var(--text-color);
+}
+
+.alert-danger {
+    background-color: var(--error-color);
+    color: var(--text-color);
+}
+
+a, .link-primary {
+    color: var(--primary-color);
+}
+
+.badge-primary {
+    background-color: var(--primary-color);
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary-color), 0.25);
+}
+
+.card-header {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.modal-content {
+    background-color: var(--surface-color);
+    color: var(--text-color);
+}
+
+.tooltip-inner {
+    background-color: var(--primary-color);
+}
+
+.border-primary {
+    border-color: var(--primary-color) !important;
+}
