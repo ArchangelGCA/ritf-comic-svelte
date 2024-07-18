@@ -2,6 +2,8 @@
     import {deserialize} from "$app/forms";
     import {invalidateAll} from "$app/navigation";
     import {toast} from "svelte-sonner";
+    import {BookPlus, ChevronDown, ImageUp} from "lucide-svelte";
+    import Comic from "$lib/Admin/Comic.svelte";
 
     export let data;
     let { comics } = data;
@@ -14,6 +16,7 @@
     let bannerFileName = '';
 
     let isDragging = false;
+    let isDraggingBanner = false;
     let isCreating = false;
 
     async function handleComicCreate(e){
@@ -58,12 +61,21 @@
 
     function handleDragEnter(event) {
         event.preventDefault();
-        isDragging = true;
+        if (event.target.id === 'bannerDropzone') {
+            isDraggingBanner = true;
+        } else {
+            isDragging = true;
+        }
     }
 
     function handleDragLeave(event) {
         event.preventDefault();
-        isDragging = false;
+        // if it is banner dropzone
+        if (event.target.id === 'bannerDropzone') {
+            isDraggingBanner = false;
+        } else {
+            isDragging = false;
+        }
     }
 
     function handleDrop(event) {
@@ -82,21 +94,10 @@
         }
     }
 
-    function loadImagePreview(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                previewUrl = reader.result;
-            };
-            reader.readAsDataURL(file);
-            fileName = file.name;
-        }
-    }
-
     function handleBannerDrop(event) {
         event.preventDefault();
         isDragging = false;
+        isDraggingBanner = false;
         const files = event.dataTransfer.files;
         if (files.length > 0) {
             // Check if file is an image, if not return
@@ -107,6 +108,18 @@
             loadBannerPreview({ target: { files: [files[0]] } });
             // Set the files to the input
             document.getElementById('banner').files = files;
+        }
+    }
+
+    function loadImagePreview(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                previewUrl = reader.result;
+            };
+            reader.readAsDataURL(file);
+            fileName = file.name;
         }
     }
 
@@ -133,9 +146,10 @@
     <!-- Create Comic -->
     <div class="row mt-2">
         <div class="col">
-            <button class="btn btn-lg btn-outline-primary bg-light bg-opacity-10 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#createComicForm" aria-expanded="false" aria-controls="createComicForm">Add Comic</button>
+            <button class="btn btn-lg btn-outline-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#createComicForm" aria-expanded="false" aria-controls="createComicForm">
+                <BookPlus /> Add Comic <ChevronDown />
+            </button>
         </div>
-
         <!-- Create Comic Form -->
         <div class="collapse" id="createComicForm">
             <div class="card card-body bg-light bg-opacity-10 mt-2">
@@ -164,12 +178,12 @@
                             <span class="text-light text-opacity-75">Selected file: {fileName}</span>
                         {/if}
                     </div>
-                    <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone" style="min-height: 15vh"
+                    <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone" id="bannerDropzone" style="min-height: 15vh"
                          on:dragover={handleDragOver}
                          on:drop={handleBannerDrop}
                          on:dragenter={handleDragEnter}
                          on:dragleave={handleDragLeave}
-                         class:dragging={isDragging}
+                         class:dragging={isDraggingBanner}
                          role="button" aria-label="File upload drop zone" tabindex="0">
                         <label for="file" class="form-label" title="cover"> Banner</label>
                         <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file" id="banner" name="banner" accept="image/*" on:change={loadBannerPreview} required/>
@@ -180,36 +194,26 @@
                             <span class="text-light text-opacity-75">Selected file: {bannerFileName}</span>
                         {/if}
                     </div>
-                    <button type="submit" class="btn btn-lg btn-primary w-100">Create Comic</button>
+                    <button type="submit" class="btn btn-lg btn-primary w-100"><ImageUp /> Create Comic</button>
                 </form>
             </div>
         </div>
     </div>
     <!-- Comics -->
     <div class="row mt-2">
-        {#each comics as comic}
-            <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-2">
-                <div class="card">
-                    <img src={comic.coverUrl} class="card-img-top rounded-3" alt={comic.cover}>
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-center">{comic.title}</h5>
-                        <p class="card-text mb-0">{comic.description}</p>
-                        <button class="btn btn-link mb-3 mt-1" type="button" data-bs-toggle="collapse" data-bs-target="#comicBanner{comic.id}" aria-expanded="false" aria-controls="comicBanner{comic.id}">Show Banner</button>
-                        <div class="collapse" id="comicBanner{comic.id}">
-                            <img src={comic.bannerUrl} class="card-img-top mb-3 rounded-3" alt={comic.banner}>
-                        </div>
-                        <a href="comics/{comic.id}" class="btn btn-primary w-100">View</a>
-                    </div>
-                </div>
-            </div>
+        {#each comics as comic (comic.id)}
+            <Comic {comic} />
         {/each}
     </div>
-
 </div>
 
 <style>
     .dropzone {
         background-color: rgba(0, 0, 0, 0.1);
         border: 2px dashed var(--primary-color) !important;
+    }
+
+    .dropzone.dragging {
+        background-color: rgb(47, 0, 89) !important;
     }
 </style>

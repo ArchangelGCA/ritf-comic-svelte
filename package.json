@@ -15,10 +15,10 @@
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"bootstrap": "^5.3.3",
+		"lucide-svelte": "^0.408.0",
 		"pocketbase": "^0.21.3",
 		"sk-seo": "^0.4.0",
 		"svelte": "^4.2.7",
-		"svelte-hero-icons": "^5.1.0",
 		"svelte-sonner": "^0.3.27",
 		"vite": "^5.0.3"
 	},

@@ -23,21 +23,23 @@ body {
     color: var(--text-color);
 }
 
+.btn {
+    border-radius: 0.6rem;
+}
+
+.btn:hover, .btn:focus, .btn:active {
+    background-color: var(--secondary-color);
+}
+
 .btn-primary {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
-    border-radius: 0.65rem;
 }
 
 /* hover, focus, active */
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
     background-color: var(--btn-primary-hover) !important;
     border-color: var(--btn-primary-hover);
-}
-
-.btn:hover, .btn:focus, .btn:active {
-    background-color: var(--secondary-color);
-    border-radius: 0.65rem;
 }
 
 .btn-secondary {
@@ -52,12 +54,48 @@ body {
 
 .btn-outline-primary:hover, .btn-outline-primary:focus, .btn-outline-primary:active {
     color: var(--text-color);
-    background-color: var(--primary-color);
+    background-color: var(--primary-color) !important;
     border-color: var(--primary-color) !important;
 }
 
+.btn-link {
+    color: var(--accent-color);
+    background-color: transparent;
+}
+
 .btn-link:hover, .btn-link:focus, .btn-link:active {
+    color: var(--text-color) !important;
     background-color: transparent !important;
+}
+
+.btn-danger {
+    background-color: var(--error-color);
+    border-color: var(--error-color);
+}
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active {
+    background-color: #ff00ff !important;
+    border-color: #ff00ff;
+}
+
+.btn-warning {
+    background-color: var(--warning-color);
+    border-color: var(--warning-color);
+}
+
+.btn-warning:hover, .btn-warning:focus, .btn-warning:active {
+    background-color: #edfa2a !important;
+    border-color: #edfa2a;
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    border-color: var(--success-color);
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active {
+    background-color: #0aa379 !important;
+    border-color: #0aa379;
 }
 
 .text-primary {
@@ -121,4 +159,14 @@ a, .link-primary {
 
 .border-primary {
     border-color: var(--primary-color) !important;
+}
+
+/* Global CSS */
+.dropzone {
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 2px dashed var(--primary-color) !important;
+}
+
+.dropzone.dragging {
+    background-color: rgb(47, 0, 89) !important;
 }

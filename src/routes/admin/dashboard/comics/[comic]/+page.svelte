@@ -1,0 +1,392 @@
+<script>
+    import {toast} from "svelte-sonner";
+    import {invalidateAll} from "$app/navigation";
+    import {deserialize} from "$app/forms";
+    import {ChevronDown, FilePlus2, Images, ImageUp, RotateCcw} from "lucide-svelte";
+    import ComicPage from "$lib/Admin/ComicPage.svelte";
+
+    export let data;
+    let { comic, pages } = data;
+    $: ({ comic, pages } = data);
+
+    let previewUrl;
+    $: previewCoverUrl = comic.coverUrl;
+    $: previewBannerUrl = comic.bannerUrl;
+
+    let fileName;
+    $: fileNameCoverUrl = comic.cover;
+    $: fileNameBannerUrl = comic.banner;
+
+    let isActionActive = false;
+    let isDragging = false;
+    let isDraggingCover = false;
+    let isDraggingBanner = false;
+
+    async function handlePageCreate(e){
+        e.preventDefault();
+
+        if (isActionActive) return;
+
+        isActionActive = true;
+
+        const formData = new FormData(e.target);
+        formData.append('comic', comic.id);
+
+        toast.info('Creating page...');
+
+        const response = await fetch('?/create', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = deserialize(await response.text());
+        if (result.type === 'success'){
+            if (result.data.status === 200 || result.data.status === 303){
+                toast.success(result.data.body.message);
+                previewUrl = '';
+                fileName = '';
+                e.target.reset();
+                await invalidateAll(); // TODO: Test again
+            } else {
+                toast.warning(result.data.body.message);
+            }
+        } else {
+            toast.error('Something went wrong...');
+        }
+
+        isActionActive = false;
+    }
+
+    async function handleCoverEdit(e){
+        e.preventDefault();
+
+        if (isActionActive) return;
+
+        isActionActive = true;
+
+        const formData = new FormData(e.target);
+        formData.append('comic', comic.id);
+
+        toast.info('Editing cover...');
+
+        const response = await fetch('?/edit_cover', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = deserialize(await response.text());
+        if (result.type === 'success'){
+            if (result.data.status === 200 || result.data.status === 303){
+                toast.success(result.data.body.message);
+                previewCoverUrl = '';
+                fileNameCoverUrl = '';
+                e.target.reset();
+                await invalidateAll(); // TODO: Test again
+            } else {
+                toast.warning(result.data.body.message);
+            }
+        } else {
+            toast.error('Something went wrong...');
+        }
+
+        isActionActive = false;
+    }
+
+    async function handleBannerEdit(e) {
+        e.preventDefault();
+
+        if (isActionActive) return;
+
+        isActionActive = true;
+
+        const formData = new FormData(e.target);
+        formData.append('comic', comic.id);
+
+        toast.info('Editing banner...');
+
+        const response = await fetch('?/edit_banner', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = deserialize(await response.text());
+        if (result.type === 'success'){
+            if (result.data.status === 200 || result.data.status === 303){
+                toast.success(result.data.body.message);
+                previewBannerUrl = '';
+                fileNameBannerUrl = '';
+                e.target.reset();
+                await invalidateAll(); // TODO: Test again
+            } else {
+                toast.warning(result.data.body.message);
+            }
+        } else {
+            toast.error('Something went wrong...');
+        }
+
+        isActionActive = false;
+    }
+
+    function handleDragOver(event) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'copy';
+    }
+
+    function handleDragEnter(event) {
+        event.preventDefault();
+        let id = event.target.id;
+        if (!id) {
+            id = event.target.parentElement.id;
+            if (!id) {
+                id = event.target.parentElement.parentElement.id;
+            }
+        }
+        switch (id) {
+            case 'coverDropzone':
+                isDraggingCover = true;
+                break;
+            case 'bannerDropzone':
+                isDraggingBanner = true;
+                break;
+            default:
+                isDragging = true;
+        }
+    }
+
+    function handleDragLeave(event) {
+        event.preventDefault();
+        let id = event.target.id;
+        if (!id) {
+            id = event.target.parentElement.id;
+            if (!id) {
+                id = event.target.parentElement.parentElement.id;
+            }
+        }
+        switch (id) {
+            case 'coverDropzone':
+                isDraggingCover = true;
+                break;
+            case 'bannerDropzone':
+                isDraggingBanner = true;
+                break;
+            default:
+                isDragging = true;
+        }
+    }
+
+    function handleDrop(event) {
+        event.preventDefault();
+        const files = event.dataTransfer.files;
+        if (files.length <= 0) return;
+        if (!files[0].type.startsWith('image/')) {
+            toast.warning('Please upload an image file!');
+            return;
+        }
+        let id = event.target.id;
+        if (!id) {
+            id = event.target.parentElement.id;
+            if (!id) {
+                id = event.target.parentElement.parentElement.id;
+            }
+        }
+        switch (id) {
+            case 'coverDropzone':
+                isDraggingCover = false;
+                loadImagePreview({ target: { files: [files[0]] } }, 'cover');
+                document.getElementById('cover').files = files;
+                break;
+            case 'bannerDropzone':
+                isDraggingBanner = false;
+                loadImagePreview({ target: { files: [files[0]] } }, 'banner');
+                document.getElementById('banner').files = files;
+                break;
+            default:
+                isDragging = false;
+                loadImagePreview({ target: { files: [files[0]] } });
+                document.getElementById('image').files = files;
+        }
+    }
+
+    function loadImagePreview(event, type) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                switch (type) {
+                    case 'cover':
+                        previewCoverUrl = reader.result;
+                        fileNameCoverUrl = file.name;
+                        break;
+                    case 'banner':
+                        previewBannerUrl = reader.result;
+                        fileNameBannerUrl = file.name;
+                        break;
+                    default:
+                        previewUrl = reader.result;
+                        fileName = file.name
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function formatDate(date){
+        return new Date(date).toLocaleString();
+    }
+</script>
+
+<div class="container">
+    <!-- Title -->
+    <div class="row mt-2">
+        <div class="col">
+            <p class="h1 text-center">Title: {comic.title}</p>
+        </div>
+    </div>
+    <!-- Cover and Banner -->
+    <div class="row mt-2">
+        <!-- Cover and Banner button -->
+        <div class="col">
+            <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#coverBanner" aria-expanded="false" aria-controls="coverBanner">
+                <Images /> Cover / Banner <ChevronDown />
+            </button>
+        </div>
+        <!-- Cover and Banner -->
+        <div class="col-12 mt-2">
+            <div class="collapse" id="coverBanner">
+                <div class="row">
+                    <!-- Cover -->
+                    <div class="col-12 col-md-6">
+                        <div class="card card-body">
+                            <form action="?/edit_cover" method="POST" enctype="multipart/form-data" on:submit={handleCoverEdit}>
+                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone" id="coverDropzone"
+                                     style="min-height: 15vh"
+                                     on:dragover={handleDragOver}
+                                     on:drop={handleDrop}
+                                     on:dragenter={handleDragEnter}
+                                     on:dragleave={handleDragLeave}
+                                     class:dragging={isDraggingCover}
+                                     role="button" aria-label="Cover upload drop zone" tabindex="0">
+                                    <label for="cover" class="form-label h4 text-center" title="cover">Cover</label>
+                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file" id="cover" name="cover" accept="image/*" on:change={event => loadImagePreview(event, 'cover')} required/>
+                                    {#if previewCoverUrl}
+                                        <img src={previewCoverUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4" style="max-height: 50vh; width: auto; object-fit: contain"/>
+                                    {/if}
+                                    {#if fileNameCoverUrl}
+                                        <span class="text-light text-opacity-75">Selected file: {fileNameCoverUrl}</span>
+                                    {/if}
+                                </div>
+                                <!-- Submit button -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary w-100"><ImageUp /> Save Cover</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- Banner -->
+                    <div class="col-12 col-md-6">
+                        <div class="card card-body">
+                            <form action="?/edit_banner" method="POST" enctype="multipart/form-data" on:submit={handleBannerEdit}>
+                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone" id="bannerDropzone" style="min-height: 15vh"
+                                     on:dragover={handleDragOver}
+                                     on:drop={handleDrop}
+                                     on:dragenter={handleDragEnter}
+                                     on:dragleave={handleDragLeave}
+                                     class:dragging={isDraggingBanner}
+                                     role="button" aria-label="Banner upload drop zone" tabindex="0">
+                                    <label for="banner" class="form-label h4 text-center" title="banner">Banner</label>
+                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file" id="banner" name="banner" accept="image/*" on:change={event => loadImagePreview(event, 'banner')} required/>
+                                    {#if previewBannerUrl}
+                                        <img src={previewBannerUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4" style="max-height: 50vh; width: auto; object-fit: contain" />
+                                    {/if}
+                                    {#if fileNameBannerUrl}
+                                        <span class="text-light text-opacity-75">Selected file: {fileNameBannerUrl}</span>
+                                    {/if}
+                                </div>
+                                <!-- Submit button -->
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary w-100"><ImageUp /> Save Banner</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Section title (actions) -->
+    <div class="row mt-2">
+        <div class="col">
+            <p class="h3 text-center">Actions:</p>
+        </div>
+    </div>
+    <!-- Page Create -->
+    <div class="row mt-2">
+        <!-- Page Creation button -->
+        <div class="col">
+            <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#createPage" aria-expanded="false" aria-controls="createPage">
+                <FilePlus2 /> Create Page <ChevronDown />
+            </button>
+        </div>
+        <!-- Page creation form -->
+        <div class="col-12 mt-2">
+            <div class="collapse" id="createPage">
+                <div class="card card-body">
+                    <!-- Pages only require this comic id (comic.id) and image (input from user) -->
+                    <form action="?/create" method="POST" enctype="multipart/form-data" on:submit={handlePageCreate}>
+                        <div class="mb-3">
+                            <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone" style="min-height: 15vh"
+                                 on:dragover={handleDragOver}
+                                 on:drop={handleDrop}
+                                 on:dragenter={handleDragEnter}
+                                 on:dragleave={handleDragLeave}
+                                 class:dragging={isDragging}
+                                 role="button" aria-label="File upload drop zone" tabindex="0">
+                                <label for="file" class="form-label" title="image"> Image</label>
+                                <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file" id="image" name="image" accept="image/*" on:change={event => loadImagePreview(event)} required/>
+                                {#if previewUrl}
+                                    <img src={previewUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4" style="max-height: 50vh; width: auto; object-fit: contain" />
+                                {/if}
+                                {#if fileName}
+                                    <span class="text-light text-opacity-75">Selected file: {fileName}</span>
+                                {/if}
+                            </div>
+                        </div>
+                        <div class="row text-center justify-content-center">
+                            <div class="col pe-sm-1 mb-2 mb-sm-auto">
+                                <button type="reset" class="btn btn-danger w-100" on:click={() => {fileName = ''; previewUrl = ''}}><RotateCcw /> Cancel</button>
+                            </div>
+                            <div class="col ps-sm-1">
+                                <button type="submit" class="btn btn-primary w-100"><ImageUp /> Create</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pages -->
+    <div class="row mt-2">
+        <div class="col-12 mb-2">
+            <p class="h3 text-center">Pages:</p>
+        </div>
+        {#if pages.length === 0}
+            <div class="col">
+                <p class="text-center text-light text-opacity-75">No pages found...</p>
+            </div>
+        {/if}
+        {#each pages as page (page.id)}
+            <ComicPage {page} on:reload={() => invalidateAll()}/>
+        {/each}
+    </div>
+</div>
+
+<style>
+    .dropzone {
+        background-color: rgba(0, 0, 0, 0.1);
+        border: 2px dashed var(--primary-color) !important;
+    }
+
+    .dropzone.dragging {
+        background-color: rgb(47, 0, 89) !important;
+    }
+</style>
