@@ -1,7 +1,13 @@
 <script>
+    import Seo from "sk-seo";
+
     export let data;
     const { comics } = data;
 </script>
+
+<svelte:head>
+    <meta name="robots" content="noindex, nofollow">
+</svelte:head>
 
 <div class="container-fluid">
     <div class="row">

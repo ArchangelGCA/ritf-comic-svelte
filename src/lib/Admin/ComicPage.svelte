@@ -153,13 +153,13 @@
         <!-- Delete Page -->
         <div class="row">
             <div class="col-12">
-                <!-- Button to delete page, that opens a confirm alert -->
+                <!-- Delete Page button -->
                 <button class="btn btn-danger w-100" type="button" on:click={handlePageDelete}><Trash2 /> Delete Page</button>
             </div>
             <!-- Dropzone to change image -->
             <div class="col-12 mt-2">
                 <div class="card card-body">
-                    <!-- Pages only require this comic id (comic.id) and image (input from user) -->
+                    <!-- Pages Form -->
                     <form action="?/create" method="POST" enctype="multipart/form-data"
                           on:submit={handlePageImageEdit}>
                         <div class="mb-3">
