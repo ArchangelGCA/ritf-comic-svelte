@@ -4,7 +4,7 @@
     import {invalidateAll} from "$app/navigation";
     import {toast} from "svelte-sonner";
     import {BookPlus, ChevronDown, ImageUp} from "lucide-svelte";
-    import Comic from "$lib/Admin/Comic.svelte";
+    import Comic from "$lib/components/admin/Comic.svelte";
 
     export let data;
     let { comics } = data;

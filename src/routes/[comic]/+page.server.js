@@ -7,11 +7,11 @@ export const load = async ({ params, url, locals: { pocketbase } }) => {
     }
 
     const comic = params.comic;
-    let pageNumber = 1;
+    let pageNumber;
 
     // Get params
     if (url.searchParams.get('page') === null || ''){
-        url.searchParams.set('page', pageNumber.toString());
+        pageNumber = 1;
     } else {
         pageNumber = parseInt(url.searchParams.get('page'));
         if (isNaN(pageNumber)){
@@ -28,7 +28,7 @@ export const load = async ({ params, url, locals: { pocketbase } }) => {
 
     // Fetch Comic Pages
     const pageData = await pocketbase.collection('pages').getFullList({
-        sort: '-created, +asc',
+        sort: '-created',
     });
 
     let page = {};

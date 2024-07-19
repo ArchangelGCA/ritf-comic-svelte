@@ -4,7 +4,7 @@
     import {invalidateAll} from "$app/navigation";
     import {deserialize} from "$app/forms";
     import {ChevronDown, FilePlus2, Images, ImageUp, RotateCcw} from "lucide-svelte";
-    import ComicPage from "$lib/Admin/ComicPage.svelte";
+    import ComicPage from "$lib/components/admin/ComicPage.svelte";
 
     export let data;
     let { comic, pages } = data;

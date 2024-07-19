@@ -26,17 +26,17 @@
             <p class="h4 text-center mt-3 mb-0"><Shield size={sizeTitleIcon}/></p>
             <hr>
             <div class="col-12">
-                <a href="/admin/dashboard/" class="btn btn-custom py-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+                <a href="/admin/dashboard/" class="btn btn-custom py-2 mb-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
                     <Gauge size={sizeNavIcons}/>
                 </a>
             </div>
             <div class="col-12">
-                <a href="/admin/dashboard/comics/" class="btn btn-custom py-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Comics">
+                <a href="/admin/dashboard/comics/" class="btn btn-custom py-2 mb-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Comics">
                     <BookImage size={sizeNavIcons}/>
                 </a>
             </div>
             <div class="col-12">
-                <a href="/admin/dashboard/settings/" class="btn btn-custom py-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Settings">
+                <a href="/admin/dashboard/settings/" class="btn btn-custom py-2 mb-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Settings">
                     <Settings size={sizeNavIcons}/>
                 </a>
             </div>
@@ -52,16 +52,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .btn-custom {
-        color: var(--text-color);
-        background-color: transparent !important;
-        border-color: transparent !important;
-        transition: all 0.3s;
-    }
-
-    .btn-custom:hover {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-    }
-</style>
