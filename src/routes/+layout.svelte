@@ -1,6 +1,15 @@
 <script>
     import '$lib/css/theme.css';
     import { Toaster } from 'svelte-sonner';
+    import {browser} from "$app/environment";
+    import {onMount} from "svelte";
+
+    onMount(() => {
+       if (browser) {
+           const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+           const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+       }
+    });
 </script>
 
 <svelte:head>
@@ -9,7 +18,3 @@
 
 <Toaster theme="dark"/>
 <slot></slot>
-
-<style>
-
-</style>

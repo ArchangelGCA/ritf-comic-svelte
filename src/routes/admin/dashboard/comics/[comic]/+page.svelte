@@ -1,5 +1,6 @@
 <script>
     import {toast} from "svelte-sonner";
+    import autoAnimate from "@formkit/auto-animate";
     import {invalidateAll} from "$app/navigation";
     import {deserialize} from "$app/forms";
     import {ChevronDown, FilePlus2, Images, ImageUp, RotateCcw} from "lucide-svelte";
@@ -235,7 +236,7 @@
     }
 </script>
 
-<div class="container">
+<div class="container pb-2">
     <!-- Title -->
     <div class="row mt-2">
         <div class="col">
@@ -352,10 +353,10 @@
                             </div>
                         </div>
                         <div class="row text-center justify-content-center">
-                            <div class="col pe-sm-1 mb-2 mb-sm-auto">
+                            <div class="col pe-0 pe-sm-1 mb-2 mb-sm-auto">
                                 <button type="reset" class="btn btn-danger w-100" on:click={() => {fileName = ''; previewUrl = ''}}><RotateCcw /> Cancel</button>
                             </div>
-                            <div class="col ps-sm-1">
+                            <div class="col ps-1 ps-sm-1">
                                 <button type="submit" class="btn btn-primary w-100"><ImageUp /> Create</button>
                             </div>
                         </div>
@@ -365,7 +366,7 @@
         </div>
     </div>
     <!-- Pages -->
-    <div class="row mt-2">
+    <div class="row mt-2" use:autoAnimate>
         <div class="col-12 mb-2">
             <p class="h3 text-center">Pages:</p>
         </div>

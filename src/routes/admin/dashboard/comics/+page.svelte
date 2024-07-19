@@ -1,5 +1,6 @@
 <script>
     import {deserialize} from "$app/forms";
+    import autoAnimate from "@formkit/auto-animate";
     import {invalidateAll} from "$app/navigation";
     import {toast} from "svelte-sonner";
     import {BookPlus, ChevronDown, ImageUp} from "lucide-svelte";
@@ -200,7 +201,7 @@
         </div>
     </div>
     <!-- Comics -->
-    <div class="row mt-2">
+    <div class="row mt-2" use:autoAnimate>
         {#each comics as comic (comic.id)}
             <Comic {comic} />
         {/each}

@@ -154,6 +154,7 @@ a, .link-primary {
 }
 
 .tooltip-inner {
+    color: var(--text-color);
     background-color: var(--primary-color);
 }
 
