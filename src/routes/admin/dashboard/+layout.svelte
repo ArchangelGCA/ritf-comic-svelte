@@ -12,7 +12,7 @@
         }
     });
 
-    let sizeTitleIcon = 50;
+    let sizeTitleIcon = 45;
     let sizeNavIcons = 30;
 </script>
 
@@ -23,26 +23,30 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-2 col-sm-1 bg-dark bg-opacity-25 text-white" style="min-height: 100vh;">
-            <p class="h4 text-center mt-3 mb-0"><Shield size={sizeTitleIcon}/></p>
+            <div class="col-12 mt-3 text-center">
+                <a href="/admin/dashboard/" class="link-light">
+                    <Shield size={sizeTitleIcon}/>
+                </a>
+            </div>
             <hr>
             <div class="col-12">
-                <a href="/admin/dashboard/" class="btn btn-custom py-2 mb-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
+                <a href="/admin/dashboard/" class="btn btn-custom px-1 px-md-2 py-2 mb-2 w-100 text-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Dashboard">
                     <Gauge size={sizeNavIcons}/>
                 </a>
             </div>
             <div class="col-12">
-                <a href="/admin/dashboard/comics/" class="btn btn-custom py-2 mb-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Comics">
+                <a href="/admin/dashboard/comics/" class="btn btn-custom px-1 px-md-2 py-2 mb-2 w-100 text-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Comics">
                     <BookImage size={sizeNavIcons}/>
                 </a>
             </div>
             <div class="col-12">
-                <a href="/admin/dashboard/settings/" class="btn btn-custom py-2 mb-2 w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Settings">
+                <a href="/admin/dashboard/settings/" class="btn btn-custom px-1 px-md-2 py-2 mb-2 w-100 text-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Settings">
                     <Settings size={sizeNavIcons}/>
                 </a>
             </div>
             <!-- logout -->
             <div class="col-12">
-                <a href="/admin/dashboard/logout/" class="btn btn-custom py-2 text-danger-emphasis w-100 text-start text-md-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Logout">
+                <a href="/admin/dashboard/logout/" class="btn btn-custom px-1 px-md-2 py-2 text-danger-emphasis w-100 text-center" data-bs-toggle="tooltip" data-bs-placement="right" title="Logout">
                     <LogOut size={sizeNavIcons}/>
                 </a>
             </div>
