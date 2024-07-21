@@ -3,29 +3,74 @@
     import { Toaster } from 'svelte-sonner';
     import {browser} from "$app/environment";
     import {onMount} from "svelte";
-    import {BookImage, BookMarked, SquareChevronRight} from "lucide-svelte";
+    import {BookImage, BookMarked, House, SquareChevronRight} from "lucide-svelte";
     import ComicPreview from "$lib/components/global/ComicPreview.svelte";
+    import {onNavigate} from "$app/navigation";
+    import Seo from "sk-seo";
 
     export let data;
     const { comics, settings } = data;
 
+    let tooltipList = [];
+
+
     onMount(() => {
        if (browser) {
            initAndCloseTooltips();
-           const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasNavigation'));
-           offcanvas.dispose();
-           console.log('Offcanvas closed');
+           initAndCloseOffcanvas();
        }
     });
 
+    onNavigate(() => {
+        if (browser) {
+            console.log('Navigating...');
+            initAndCloseTooltips();
+            initAndCloseOffcanvas();
+        }
+    });
+
+    /**
+    * Function to close offcanvas and remove backdrop leftovers.
+    * */
+    async function hideOffcanvas() {
+        if (document.querySelector('.offcanvas.show')) {
+            document.querySelector('.offcanvas.show').classList.remove('show');
+            document.querySelector('.offcanvas-backdrop').remove();
+            // clear style from body
+            document.body.style = '';
+        }
+    }
+
+    /**
+     * Function to initialize and close all offcanvas.
+     * */
+    async function initAndCloseOffcanvas() {
+        if (document.querySelector('.offcanvas.show')) {
+            document.querySelector('.offcanvas.show').classList.remove('show');
+            document.querySelector('.offcanvas-backdrop').remove();
+            // clear style from body
+            document.body.style = '';
+        }
+        const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasNavigation'));
+        offcanvas.hide();
+    }
+
+    /**
+     * Function to initialize and close all tooltips.
+     */
     async function initAndCloseTooltips() {
+        if (tooltipList.length > 0) {
+            tooltipList.forEach(tooltip => tooltip.hide());
+        }
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
         tooltipList.forEach(tooltip => tooltip.hide());
     }
 
     let sizeMenuIcon = 40;
 </script>
+
+<Seo title="{settings.title}" description="{settings.description}" />
 
 <svelte:head>
     <meta name="robots" content="noindex, nofollow">
@@ -44,13 +89,17 @@
 <!-- OffCanvas -->
 <div class="offcanvas offcanvas-start bg-surface border-0" tabindex="-1" id="offcanvasNavigation" aria-labelledby="offcanvasNavigationLabel">
     <div class="offcanvas-header">
-        <p class="h5 my-auto" id="offcanvasNavigationLabel"><BookMarked size={sizeMenuIcon}/> Explorer</p>
+        <a class="text-decoration-none link-light" href="/" data-bs-toggle="tooltip" title="home"><p class="h5 my-auto" id="offcanvasNavigationLabel"><BookMarked size={sizeMenuIcon}/> Explorer</p></a>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body border-top border-light-subtle">
         <!-- Collapsed Comics with button to open collapsed (not an accordion) -->
         <div class="row">
-            <div class="col">
+            <!-- Homepage -->
+            <div class="col-12 mb-2">
+                <a href="/" class="btn btn-custom w-100" title="Home"><House /> Home</a>
+            </div>
+            <div class="col-12">
                 <button class="btn btn-custom w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComics" aria-expanded="false" aria-controls="collapseComics">
                     <BookImage /> Comics
                 </button>

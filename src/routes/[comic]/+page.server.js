@@ -46,16 +46,18 @@ export const load = async ({ params, url, locals: { pocketbase } }) => {
 
     // Filter page by number
     if (!pageData || pageData.length === 0 || pageData.length < pageNumber) {
-        page = [];
+        page = {};
     } else {
         page = pageData[pageNumber-1];
     }
 
-    if (page){
+    if (page && pageData.length > 0) {
         page.imageUrl = pocketbase.files.getUrl(page, page.image, {'thumb': '500x0'});
+        page.number = pageNumber;
     }
 
     return {
+        comic: comicData,
         page,
     }
 }

@@ -9,7 +9,7 @@
     --tertiary-color: #484a43;
     --accent-color: #ff00ff;
     --success-color: #0aa379;
-    --warning-color: #edfa2a;
+    --warning-color: #f6ff7e;
     --error-color: #66025e;
     --surface-color: #01130e;
     --btn-primary-hover: #7c0cba;
@@ -115,6 +115,18 @@ body {
 
 .text-accent {
     color: var(--accent-color) !important;
+}
+
+.text-warning {
+    color: var(--warning-color) !important;
+}
+
+.text-success {
+    color: var(--success-color) !important;
+}
+
+.text-danger {
+    color: var(--error-color) !important;
 }
 
 .bg-primary {

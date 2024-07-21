@@ -5,6 +5,8 @@
     const { settings } = data;
 </script>
 
+<Seo title="{settings.title}" description="{settings.description}" />
+
 <svelte:head>
     <meta name="robots" content="noindex, nofollow">
 </svelte:head>
