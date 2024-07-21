@@ -20,15 +20,26 @@ export const load = async ({ params, url, locals: { pocketbase } }) => {
     }
 
     // Check if comic exists
-    const comicData = await pocketbase.collection('comics').getOne(comic);
-
-    if (!comicData || comicData.length === 0) {
-        return errorx(404, 'Comic not found');
+    let comicData = {};
+    try {
+        comicData = await pocketbase.collection('comics').getOne(comic);
+    } catch (e) {
+        try {
+            const stringQuery = 'title="' + comic + '"';
+            comicData = await pocketbase.collection('comics').getFirstListItem(stringQuery);
+        } catch (e) {
+            return errorx(404, 'Comic not found');
+        }
     }
+
+    // Get bannerUrl and coverUrl
+    comicData.coverUrl = pocketbase.files.getUrl(comicData, comicData.cover, {'thumb': '500x0'});
+    comicData.bannerUrl = pocketbase.files.getUrl(comicData, comicData.banner, {'thumb': '500x0'});
 
     // Fetch Comic Pages
     const pageData = await pocketbase.collection('pages').getFullList({
-        sort: '-created',
+        filter: 'comic="' + comicData.id + '"',
+        sort: '+order, +created',
     });
 
     let page = {};
@@ -38,6 +49,10 @@ export const load = async ({ params, url, locals: { pocketbase } }) => {
         page = [];
     } else {
         page = pageData[pageNumber-1];
+    }
+
+    if (page){
+        page.imageUrl = pocketbase.files.getUrl(page, page.image, {'thumb': '500x0'});
     }
 
     return {
