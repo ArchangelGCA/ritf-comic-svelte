@@ -1,6 +1,6 @@
 <script>
     import Seo from "sk-seo";
-    import {ArrowLeft, FileWarning, House} from "lucide-svelte";
+    import {ArrowLeft, ArrowRight, BookOpenText, FileWarning} from "lucide-svelte";
 
     export let data;
     let { comic, page, settings } = data;
@@ -23,9 +23,9 @@
         </div>
     </div>
     <!-- Title -->
-    <div class="row my-4">
+    <div class="row my-3 mt-4">
         <div class="col">
-            <p class="text-center h2">{comic.title} - Page {page.number ? page.number : 'Not found'}</p>
+            <p class="text-center h3">{comic.title} - #{page.number ? page.number : 'Not found'}</p>
         </div>
     </div>
     <!-- Page -->
@@ -45,6 +45,36 @@
                     <a href={page.imageUrl} target="_blank">
                         <img src={page.imageUrl} class="img-fluid rounded-4" alt={comic.title + ' - Page ' + page.number}>
                     </a>
+                </div>
+            </div>
+            <!-- Controls to go forward and back -->
+            <div class="row mt-3">
+                <div class="col-6 text-center">
+                    {#if page.hasPrevious}
+                        <a href="{comic.id}?page={page.number - 1}" class="btn btn-custom text-accent"><ArrowLeft /> Previous</a>
+                    {/if}
+                </div>
+                <div class="col-6 text-center">
+                    {#if page.hasNext}
+                        <a href="{comic.id}?page={page.number + 1}" class="btn btn-custom text-accent">Next <ArrowRight /></a>
+                    {/if}
+                </div>
+                <div class="col-12">
+                    <!-- currennt page / total pages -->
+                    <p class="text-center text-light text-opacity-75">{page.number} / {comic.pagesTotal}</p>
+                </div>
+            </div>
+            <!-- Description -->
+            <div class="row my-3">
+                <!-- Title that when clicked opens a collapsed description -->
+                <div class="col-12">
+                    <button class="btn btn-custom w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription" aria-expanded="false" aria-controls="collapseDescription">
+                        <BookOpenText /> More
+                    </button>
+                </div>
+                <!-- Collapsed description -->
+                <div class="collapse col-12 justify-content-center bg-light bg-opacity-10 rounded-4 pt-3 mt-2" id="collapseDescription">
+                    {@html comic.description}
                 </div>
             </div>
         {/if}

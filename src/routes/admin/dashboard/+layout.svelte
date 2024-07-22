@@ -5,13 +5,40 @@
     import {browser} from "$app/environment";
     import {onMount} from "svelte";
 
+    let tooltipList = [];
+
     onMount(() => {
         if (browser) {
-            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-            tooltipList.forEach(tooltip => tooltip.hide());
+            initAndCloseTooltips();
+            initAndCloseOffcanvas();
         }
     });
+
+    /**
+     * Function to initialize and close all offcanvas.
+     * */
+    async function initAndCloseOffcanvas() {
+        if (document.querySelector('.offcanvas.show')) {
+            document.querySelector('.offcanvas.show').classList.remove('show');
+            document.querySelector('.offcanvas-backdrop').remove();
+            // clear style from body
+            document.body.style = '';
+        }
+        const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasNavigation'));
+        offcanvas.hide();
+    }
+
+    /**
+     * Function to initialize and close all tooltips.
+     */
+    async function initAndCloseTooltips() {
+        if (tooltipList.length > 0) {
+            tooltipList.forEach(tooltip => tooltip.hide());
+        }
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+        tooltipList.forEach(tooltip => tooltip.hide());
+    }
 
     let sizeTitleIcon = 45;
     let sizeNavIcons = 30;

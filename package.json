@@ -22,5 +22,8 @@
 		"svelte-sonner": "^0.3.27",
 		"vite": "^5.0.3"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@tinymce/tinymce-svelte": "^3.0.0"
+	}
 }

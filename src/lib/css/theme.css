@@ -58,6 +58,17 @@ body {
     border-color: var(--primary-color) !important;
 }
 
+.btn-outline-secondary {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.btn-outline-secondary:hover, .btn-outline-secondary:focus, .btn-outline-secondary:active {
+    color: var(--text-color);
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}
+
 .btn-link {
     color: var(--accent-color);
     background-color: transparent;

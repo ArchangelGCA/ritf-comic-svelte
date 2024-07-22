@@ -3,6 +3,7 @@
     import autoAnimate from "@formkit/auto-animate";
     import {invalidateAll} from "$app/navigation";
     import {deserialize} from "$app/forms";
+    import Editor from '@tinymce/tinymce-svelte';
     import {ChevronDown, FilePlus2, Images, ImageUp, RotateCcw} from "lucide-svelte";
     import ComicPage from "$lib/components/admin/ComicPage.svelte";
 
@@ -17,6 +18,56 @@
     let fileName;
     $: fileNameCoverUrl = comic.cover;
     $: fileNameBannerUrl = comic.banner;
+
+    let conf = {
+        skin: 'oxide-dark',
+        content_css: 'dark',
+        license_key: 'gpl',
+        block_unsupported_drop: true,
+        branding: false,
+        plugins: 'link autolink wordcount charmap code fullscreen',
+        default_link_target: '_blank',
+        images_upload_handler: () => Promise.reject({
+            remove: true,
+            message: 'You can\'t upload images in the description.',
+        }),
+        toolbar_mode: 'sliding',
+        toolbar: [
+            {
+                name: 'history',
+                items: ['undo', 'redo']
+            },
+            {
+                name: 'links',
+                items: ['link']
+            },
+            {
+                name: 'formatting',
+                items: ['bold', 'italic']
+            },
+            {
+                name: 'alignment',
+                items: ['alignleft', 'aligncenter', 'alignright', 'alignjustify']
+            },
+            {
+                name: 'indentation',
+                items: ['outdent', 'indent']
+            },
+            {
+                name: 'tools',
+                items: ['wordcount', 'charmap', 'code', 'fullscreen']
+            }
+        ],
+        setup: function (editor) {
+            editor.on('init', function () {
+                const promotionLink = document.querySelector('.tox-promotion-link');
+                if (promotionLink) {
+                    promotionLink.remove();
+                }
+            });
+        },
+    };
+    let editorContent = comic.description;
 
     let isActionActive = false;
     let isDragging = false;
@@ -118,6 +169,38 @@
                 fileNameBannerUrl = '';
                 e.target.reset();
                 await invalidateAll(); // TODO: Test again
+            } else {
+                toast.warning(result.data.body.message);
+            }
+        } else {
+            toast.error('Something went wrong...');
+        }
+
+        isActionActive = false;
+    }
+
+    async function handleDescriptionEdit(){
+        if (isActionActive) return;
+
+        isActionActive = true;
+
+        const formData = new FormData();
+        formData.append('comic', comic.id);
+        formData.append('description', editorContent);
+
+        toast.info('Editing description...');
+
+        const response = await fetch('?/edit_description', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = deserialize(await response.text());
+
+        if (result.type === 'success'){
+            if (result.data.status === 200 || result.data.status === 303){
+                toast.success(result.data.body.message);
+                await invalidateAll();
             } else {
                 toast.warning(result.data.body.message);
             }
@@ -230,10 +313,6 @@
             reader.readAsDataURL(file);
         }
     }
-
-    function formatDate(date){
-        return new Date(date).toLocaleString();
-    }
 </script>
 
 <div class="container pb-2">
@@ -323,9 +402,15 @@
     <!-- Page Create -->
     <div class="row mt-2">
         <!-- Page Creation button -->
-        <div class="col">
+        <div class="col-12 col-md-6">
             <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#createPage" aria-expanded="false" aria-controls="createPage">
-                <FilePlus2 /> Create Page <ChevronDown />
+                <FilePlus2 /> Add Page <ChevronDown />
+            </button>
+        </div>
+        <!-- Comid Description editor button -->
+        <div class="col-12 col-md-6 mt-2 mt-md-auto">
+            <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#editDescription" aria-expanded="false" aria-controls="editDescription">
+                <Images /> Comic Description <ChevronDown />
             </button>
         </div>
         <!-- Page creation form -->
@@ -357,10 +442,29 @@
                                 <button type="reset" class="btn btn-danger w-100" on:click={() => {fileName = ''; previewUrl = ''}}><RotateCcw /> Cancel</button>
                             </div>
                             <div class="col ps-1 ps-sm-1">
-                                <button type="submit" class="btn btn-primary w-100"><ImageUp /> Create</button>
+                                <button type="submit" class="btn btn-primary w-100"><ImageUp /> Submit</button>
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-2">
+            <div class="collapse" id="editDescription">
+                <div class="card card-body">
+                    <Editor {conf}
+                            scriptSrc="../../../tinymce/tinymce.min.js"
+                            bind:value={editorContent}
+                    />
+                    <!-- Reset and save buttons -->
+                    <div class="row text-center justify-content-center mt-2">
+                        <div class="col pe-0 pe-sm-1 mb-2 mb-sm-auto">
+                            <button type="reset" class="btn btn-danger w-100" on:click={() => {editorContent = ''}}><RotateCcw /> Reset</button>
+                        </div>
+                        <div class="col ps-1 ps-sm-1">
+                            <button type="button" class="btn btn-primary w-100" on:click={handleDescriptionEdit}><ImageUp /> Save</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

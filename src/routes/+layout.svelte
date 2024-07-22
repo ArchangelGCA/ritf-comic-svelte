@@ -30,18 +30,6 @@
     });
 
     /**
-    * Function to close offcanvas and remove backdrop leftovers.
-    * */
-    async function hideOffcanvas() {
-        if (document.querySelector('.offcanvas.show')) {
-            document.querySelector('.offcanvas.show').classList.remove('show');
-            document.querySelector('.offcanvas-backdrop').remove();
-            // clear style from body
-            document.body.style = '';
-        }
-    }
-
-    /**
      * Function to initialize and close all offcanvas.
      * */
     async function initAndCloseOffcanvas() {
