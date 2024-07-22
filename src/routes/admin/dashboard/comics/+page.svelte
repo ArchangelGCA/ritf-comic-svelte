@@ -42,8 +42,10 @@
                 toast.success(result.data.body.message);
                 previewUrl = '';
                 fileName = '';
+                bannerPreviewUrl = '';
+                bannerFileName = '';
                 e.target.reset();
-                await invalidateAll(); // TODO: Test again
+                await invalidateAll();
             } else {
                 toast.warning(result.data.body.message);
             }

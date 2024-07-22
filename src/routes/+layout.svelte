@@ -67,7 +67,7 @@
 <Toaster theme="dark"/>
 
 <div class="container-fluid">
-    <div class="position-fixed bottom-0 end-0 mb-3 me-3">
+    <div class="position-fixed bottom-0 end-0 mb-3 me-3" style="z-index: 1">
         <button class="btn btn-custom text-accent" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavigation" aria-controls="offcanvasNavigation">
             <SquareChevronRight size={sizeMenuIcon}/>
         </button>

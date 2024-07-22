@@ -1,10 +1,10 @@
 <script>
     import {toast} from "svelte-sonner";
     import autoAnimate from "@formkit/auto-animate";
-    import {invalidateAll} from "$app/navigation";
+    import {goto, invalidateAll} from "$app/navigation";
     import {deserialize} from "$app/forms";
     import Editor from '@tinymce/tinymce-svelte';
-    import {ChevronDown, FilePlus2, Images, ImageUp, RotateCcw} from "lucide-svelte";
+    import {ChevronDown, FilePlus2, Images, ImageUp, RotateCcw, Trash2} from "lucide-svelte";
     import ComicPage from "$lib/components/admin/ComicPage.svelte";
 
     export let data;
@@ -201,6 +201,38 @@
             if (result.data.status === 200 || result.data.status === 303){
                 toast.success(result.data.body.message);
                 await invalidateAll();
+            } else {
+                toast.warning(result.data.body.message);
+            }
+        } else {
+            toast.error('Something went wrong...');
+        }
+
+        isActionActive = false;
+    }
+
+    async function handleComicDelete(){
+        if (isActionActive) return;
+
+        isActionActive = true;
+
+        const formData = new FormData();
+        formData.append('comic', comic.id);
+
+        toast.info('Deleting comic...');
+
+        const response = await fetch('?/delete_comic', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = deserialize(await response.text());
+
+        if (result.type === 'success'){
+            if (result.data.status === 200 || result.data.status === 303){
+                toast.success(result.data.body.message);
+                await invalidateAll();
+                await goto('/admin/dashboard/comics');
             } else {
                 toast.warning(result.data.body.message);
             }
@@ -463,6 +495,29 @@
                         </div>
                         <div class="col ps-1 ps-sm-1">
                             <button type="button" class="btn btn-primary w-100" on:click={handleDescriptionEdit}><ImageUp /> Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Comic Deletion -->
+    <div class="row mt-2">
+        <div class="col">
+            <button class="btn btn-outline-danger w-100" type="button" data-bs-toggle="collapse" data-bs-target="#deleteComic" aria-expanded="false" aria-controls="deleteComic">
+                <Trash2 /> Delete Comic <ChevronDown />
+            </button>
+        </div>
+        <div class="col-12 mt-2">
+            <div class="collapse" id="deleteComic">
+                <div class="card card-body bg-danger bg-opacity-25">
+                    <p class="text-center text-danger-emphasis">Are you sure you want to delete this comic?</p>
+                    <div class="row text-center justify-content-center mt-2">
+                        <div class="col pe-0 pe-sm-1 mb-2 mb-sm-auto">
+                            <button class="btn btn-outline-danger w-100" type="button" data-bs-toggle="collapse" data-bs-target="#deleteComic" aria-expanded="false" aria-controls="deleteComic"><RotateCcw /> Cancel</button>
+                        </div>
+                        <div class="col ps-1 ps-sm-1">
+                            <button class="btn btn-danger w-100" on:click={handleComicDelete}><Trash2 /> Delete</button>
                         </div>
                     </div>
                 </div>

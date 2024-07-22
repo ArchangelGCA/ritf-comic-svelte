@@ -43,6 +43,7 @@ export const load = async ({ params, url, locals: { pocketbase } }) => {
     });
 
     let page = {};
+    comicData.pagesTotal = 0;
 
     // Filter page by number
     if (!pageData || pageData.length === 0 || pageData.length < pageNumber) {

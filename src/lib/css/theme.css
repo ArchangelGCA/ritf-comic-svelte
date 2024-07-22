@@ -10,7 +10,7 @@
     --accent-color: #ff00ff;
     --success-color: #0aa379;
     --warning-color: #f6ff7e;
-    --error-color: #66025e;
+    --error-color: #cc006b;
     --surface-color: #01130e;
     --btn-primary-hover: #7c0cba;
 }
@@ -67,6 +67,17 @@ body {
     color: var(--text-color);
     background-color: var(--secondary-color) !important;
     border-color: var(--secondary-color) !important;
+}
+
+.btn-outline-danger {
+    color: var(--error-color);
+    border-color: var(--error-color);
+}
+
+.btn-outline-danger:hover, .btn-outline-danger:focus, .btn-outline-danger:active {
+    color: var(--text-color);
+    background-color: var(--error-color) !important;
+    border-color: var(--error-color) !important;
 }
 
 .btn-link {

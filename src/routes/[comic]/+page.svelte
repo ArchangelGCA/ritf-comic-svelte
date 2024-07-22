@@ -10,7 +10,7 @@
 </script>
 
 <Seo
-        title="{comic.title + ' - Page ' + page.number}"
+        title="{comic.title + ' - Page ' + (!page.number ? 'Not found' : page.number)}"
         description="{page.description}"
         index="false"
 />
@@ -33,9 +33,15 @@
         {#if !page || !page.imageUrl}
             <div class="row text-center justify-content-center">
                 <div class="col-12">
-                    <p class="h4 text-warning"><FileWarning size={sizeWarningIcon}/> Page not found! </p>
-                    <!-- Button to go back -->
-                    <a href="{comic.id}" class="btn btn-custom text-accent"><ArrowLeft /> Go back</a>
+                    {#if comic.pagesTotal === 0}
+                        <p class="h4 text-warning"><FileWarning size={sizeWarningIcon}/> This comic doesn't have pages! </p>
+                        <!-- Button to go back -->
+                        <a href="/" class="btn btn-custom text-accent"><ArrowLeft /> Go back</a>
+                    {:else}
+                        <p class="h4 text-warning"><FileWarning size={sizeWarningIcon}/> Page not found! </p>
+                        <!-- Button to go back -->
+                        <a href="{comic.id}" class="btn btn-custom text-accent"><ArrowLeft /> Go back</a>
+                    {/if}
                 </div>
             </div>
         {:else}
@@ -60,7 +66,7 @@
                     {/if}
                 </div>
                 <div class="col-12">
-                    <!-- currennt page / total pages -->
+                    <!-- current page / total pages -->
                     <p class="text-center text-light text-opacity-75">{page.number} / {comic.pagesTotal}</p>
                 </div>
             </div>

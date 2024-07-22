@@ -2,8 +2,8 @@ import {POCKETBASE_URL, POCKETBASE_EMAIL, POCKETBASE_PSW} from '$env/static/priv
 import PocketBase from 'pocketbase';
 
 export const load = async ({ locals: { pocketbase, user } }) => {
-    const comics = await pocketbase.collection('comics').getFullList({
-        sort: '-created',
+    /*const comics = await pocketbase.collection('comics').getFullList({
+        sort: '-created, +order',
     });
 
     comics.forEach(comic => {
@@ -13,7 +13,7 @@ export const load = async ({ locals: { pocketbase, user } }) => {
 
     return {
         comics,
-    }
+    }*/
 }
 
 export const actions = {
