@@ -6,6 +6,7 @@
     import {BookImage, BookMarked, House, SquareChevronRight} from "lucide-svelte";
     import ComicPreview from "$lib/components/global/ComicPreview.svelte";
     import {onNavigate} from "$app/navigation";
+    import autoAnimate from "@formkit/auto-animate";
     import Seo from "sk-seo";
 
     export let data;
@@ -102,4 +103,6 @@
     </div>
 </div>
 
-<slot></slot>
+<div use:autoAnimate>
+    <slot></slot>
+</div>

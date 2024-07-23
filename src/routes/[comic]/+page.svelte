@@ -1,5 +1,6 @@
 <script>
     import Seo from "sk-seo";
+    import autoAnimate from "@formkit/auto-animate";
     import {ArrowLeft, ArrowRight, BookOpenText, FileWarning} from "lucide-svelte";
 
     export let data;
@@ -29,7 +30,7 @@
         </div>
     </div>
     <!-- Page -->
-    <div class="container">
+    <div class="container" use:autoAnimate>
         {#if !page || !page.imageUrl}
             <div class="row text-center justify-content-center">
                 <div class="col-12">
