@@ -8,8 +8,8 @@
     import ComicPage from "$lib/components/admin/ComicPage.svelte";
 
     export let data;
-    let { comic, pages } = data;
-    $: ({ comic, pages } = data);
+    let {comic, pages} = data;
+    $: ({comic, pages} = data);
 
     let previewUrl;
     $: previewCoverUrl = comic.coverUrl;
@@ -74,7 +74,7 @@
     let isDraggingCover = false;
     let isDraggingBanner = false;
 
-    async function handlePageCreate(e){
+    async function handlePageCreate(e) {
         e.preventDefault();
 
         if (isActionActive) return;
@@ -92,8 +92,8 @@
         });
 
         const result = deserialize(await response.text());
-        if (result.type === 'success'){
-            if (result.data.status === 200 || result.data.status === 303){
+        if (result.type === 'success') {
+            if (result.data.status === 200 || result.data.status === 303) {
                 toast.success(result.data.body.message);
                 previewUrl = '';
                 fileName = '';
@@ -109,7 +109,7 @@
         isActionActive = false;
     }
 
-    async function handleCoverEdit(e){
+    async function handleCoverEdit(e) {
         e.preventDefault();
 
         if (isActionActive) return;
@@ -127,8 +127,8 @@
         });
 
         const result = deserialize(await response.text());
-        if (result.type === 'success'){
-            if (result.data.status === 200 || result.data.status === 303){
+        if (result.type === 'success') {
+            if (result.data.status === 200 || result.data.status === 303) {
                 toast.success(result.data.body.message);
                 previewCoverUrl = '';
                 fileNameCoverUrl = '';
@@ -162,8 +162,8 @@
         });
 
         const result = deserialize(await response.text());
-        if (result.type === 'success'){
-            if (result.data.status === 200 || result.data.status === 303){
+        if (result.type === 'success') {
+            if (result.data.status === 200 || result.data.status === 303) {
                 toast.success(result.data.body.message);
                 previewBannerUrl = '';
                 fileNameBannerUrl = '';
@@ -179,7 +179,7 @@
         isActionActive = false;
     }
 
-    async function handleDescriptionEdit(){
+    async function handleDescriptionEdit() {
         if (isActionActive) return;
 
         isActionActive = true;
@@ -197,8 +197,8 @@
 
         const result = deserialize(await response.text());
 
-        if (result.type === 'success'){
-            if (result.data.status === 200 || result.data.status === 303){
+        if (result.type === 'success') {
+            if (result.data.status === 200 || result.data.status === 303) {
                 toast.success(result.data.body.message);
                 await invalidateAll();
             } else {
@@ -211,7 +211,7 @@
         isActionActive = false;
     }
 
-    async function handleComicDelete(){
+    async function handleComicDelete() {
         if (isActionActive) return;
 
         isActionActive = true;
@@ -228,8 +228,8 @@
 
         const result = deserialize(await response.text());
 
-        if (result.type === 'success'){
-            if (result.data.status === 200 || result.data.status === 303){
+        if (result.type === 'success') {
+            if (result.data.status === 200 || result.data.status === 303) {
                 toast.success(result.data.body.message);
                 await invalidateAll();
                 await goto('/admin/dashboard/comics');
@@ -308,17 +308,17 @@
         switch (id) {
             case 'coverDropzone':
                 isDraggingCover = false;
-                loadImagePreview({ target: { files: [files[0]] } }, 'cover');
+                loadImagePreview({target: {files: [files[0]]}}, 'cover');
                 document.getElementById('cover').files = files;
                 break;
             case 'bannerDropzone':
                 isDraggingBanner = false;
-                loadImagePreview({ target: { files: [files[0]] } }, 'banner');
+                loadImagePreview({target: {files: [files[0]]}}, 'banner');
                 document.getElementById('banner').files = files;
                 break;
             default:
                 isDragging = false;
-                loadImagePreview({ target: { files: [files[0]] } });
+                loadImagePreview({target: {files: [files[0]]}});
                 document.getElementById('image').files = files;
         }
     }
@@ -358,8 +358,11 @@
     <div class="row mt-2">
         <!-- Cover and Banner button -->
         <div class="col">
-            <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#coverBanner" aria-expanded="false" aria-controls="coverBanner">
-                <Images /> Cover / Banner <ChevronDown />
+            <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#coverBanner" aria-expanded="false" aria-controls="coverBanner">
+                <Images/>
+                Cover / Banner
+                <ChevronDown/>
             </button>
         </div>
         <!-- Cover and Banner -->
@@ -369,8 +372,10 @@
                     <!-- Cover -->
                     <div class="col-12 col-md-6">
                         <div class="card card-body">
-                            <form action="?/edit_cover" method="POST" enctype="multipart/form-data" on:submit={handleCoverEdit}>
-                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone" id="coverDropzone"
+                            <form action="?/edit_cover" method="POST" enctype="multipart/form-data"
+                                  on:submit={handleCoverEdit}>
+                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
+                                     id="coverDropzone"
                                      style="min-height: 15vh"
                                      on:dragover={handleDragOver}
                                      on:drop={handleDrop}
@@ -379,9 +384,13 @@
                                      class:dragging={isDraggingCover}
                                      role="button" aria-label="Cover upload drop zone" tabindex="0">
                                     <label for="cover" class="form-label h4 text-center" title="cover">Cover</label>
-                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file" id="cover" name="cover" accept="image/*" on:change={event => loadImagePreview(event, 'cover')} required/>
+                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
+                                           id="cover" name="cover" accept="image/*"
+                                           on:change={event => loadImagePreview(event, 'cover')} required/>
                                     {#if previewCoverUrl}
-                                        <img src={previewCoverUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4" style="max-height: 50vh; width: auto; object-fit: contain"/>
+                                        <img src={previewCoverUrl} alt="Preview"
+                                             class="img-thumbnail mt-2 mb-2 rounded-4"
+                                             style="max-height: 50vh; width: auto; object-fit: contain"/>
                                     {/if}
                                     {#if fileNameCoverUrl}
                                         <span class="text-light text-opacity-75">Selected file: {fileNameCoverUrl}</span>
@@ -389,7 +398,10 @@
                                 </div>
                                 <!-- Submit button -->
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary w-100"><ImageUp /> Save Cover</button>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <ImageUp/>
+                                        Save Cover
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -397,8 +409,10 @@
                     <!-- Banner -->
                     <div class="col-12 col-md-6">
                         <div class="card card-body">
-                            <form action="?/edit_banner" method="POST" enctype="multipart/form-data" on:submit={handleBannerEdit}>
-                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone" id="bannerDropzone" style="min-height: 15vh"
+                            <form action="?/edit_banner" method="POST" enctype="multipart/form-data"
+                                  on:submit={handleBannerEdit}>
+                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
+                                     id="bannerDropzone" style="min-height: 15vh"
                                      on:dragover={handleDragOver}
                                      on:drop={handleDrop}
                                      on:dragenter={handleDragEnter}
@@ -406,9 +420,13 @@
                                      class:dragging={isDraggingBanner}
                                      role="button" aria-label="Banner upload drop zone" tabindex="0">
                                     <label for="banner" class="form-label h4 text-center" title="banner">Banner</label>
-                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file" id="banner" name="banner" accept="image/*" on:change={event => loadImagePreview(event, 'banner')} required/>
+                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
+                                           id="banner" name="banner" accept="image/*"
+                                           on:change={event => loadImagePreview(event, 'banner')} required/>
                                     {#if previewBannerUrl}
-                                        <img src={previewBannerUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4" style="max-height: 50vh; width: auto; object-fit: contain" />
+                                        <img src={previewBannerUrl} alt="Preview"
+                                             class="img-thumbnail mt-2 mb-2 rounded-4"
+                                             style="max-height: 50vh; width: auto; object-fit: contain"/>
                                     {/if}
                                     {#if fileNameBannerUrl}
                                         <span class="text-light text-opacity-75">Selected file: {fileNameBannerUrl}</span>
@@ -416,7 +434,10 @@
                                 </div>
                                 <!-- Submit button -->
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary w-100"><ImageUp /> Save Banner</button>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <ImageUp/>
+                                        Save Banner
+                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -425,105 +446,144 @@
             </div>
         </div>
     </div>
-    <!-- Section title (actions) -->
-    <div class="row mt-2">
+    <div class="row bg-light bg-opacity-10 pt-2 pb-3 rounded-4">
         <div class="col">
-            <p class="h3 text-center">Actions:</p>
-        </div>
-    </div>
-    <!-- Page Create -->
-    <div class="row mt-2">
-        <!-- Page Creation button -->
-        <div class="col-12 col-md-6">
-            <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#createPage" aria-expanded="false" aria-controls="createPage">
-                <FilePlus2 /> Add Page <ChevronDown />
-            </button>
-        </div>
-        <!-- Comid Description editor button -->
-        <div class="col-12 col-md-6 mt-2 mt-md-auto">
-            <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse" data-bs-target="#editDescription" aria-expanded="false" aria-controls="editDescription">
-                <Images /> Comic Description <ChevronDown />
-            </button>
-        </div>
-        <!-- Page creation form -->
-        <div class="col-12 mt-2">
-            <div class="collapse" id="createPage">
-                <div class="card card-body">
-                    <!-- Pages only require this comic id (comic.id) and image (input from user) -->
-                    <form action="?/create" method="POST" enctype="multipart/form-data" on:submit={handlePageCreate}>
-                        <div class="mb-3">
-                            <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone" style="min-height: 15vh"
-                                 on:dragover={handleDragOver}
-                                 on:drop={handleDrop}
-                                 on:dragenter={handleDragEnter}
-                                 on:dragleave={handleDragLeave}
-                                 class:dragging={isDragging}
-                                 role="button" aria-label="File upload drop zone" tabindex="0">
-                                <label for="file" class="form-label" title="image"> Image</label>
-                                <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file" id="image" name="image" accept="image/*" on:change={event => loadImagePreview(event)} required/>
-                                {#if previewUrl}
-                                    <img src={previewUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4" style="max-height: 50vh; width: auto; object-fit: contain" />
-                                {/if}
-                                {#if fileName}
-                                    <span class="text-light text-opacity-75">Selected file: {fileName}</span>
-                                {/if}
+            <!-- Section title (actions) -->
+            <div class="row mt-2">
+                <div class="col">
+                    <p class="h3 text-center">Actions:</p>
+                </div>
+            </div>
+            <!-- Page Create -->
+            <div class="row mt-2">
+                <!-- Page Creation button -->
+                <div class="col-12 col-md-6">
+                    <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#createPage" aria-expanded="false" aria-controls="createPage">
+                        <FilePlus2/>
+                        Add Page
+                        <ChevronDown/>
+                    </button>
+                </div>
+                <!-- Comid Description editor button -->
+                <div class="col-12 col-md-6 mt-2 mt-md-auto">
+                    <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#editDescription" aria-expanded="false" aria-controls="editDescription">
+                        <Images/>
+                        Comic Description
+                        <ChevronDown/>
+                    </button>
+                </div>
+                <!-- Page creation form -->
+                <div class="col-12 mt-2 collapse" id="createPage">
+                    <div class="card card-body">
+                        <!-- Pages only require this comic id (comic.id) and image (input from user) -->
+                        <form action="?/create" method="POST" enctype="multipart/form-data"
+                              on:submit={handlePageCreate}>
+                            <div class="mb-3">
+                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
+                                     style="min-height: 15vh"
+                                     on:dragover={handleDragOver}
+                                     on:drop={handleDrop}
+                                     on:dragenter={handleDragEnter}
+                                     on:dragleave={handleDragLeave}
+                                     class:dragging={isDragging}
+                                     role="button" aria-label="File upload drop zone" tabindex="0">
+                                    <label for="file" class="form-label text-center" title="image"> Image</label>
+                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
+                                           id="image" name="image" accept="image/*"
+                                           on:change={event => loadImagePreview(event)} required/>
+                                    {#if previewUrl}
+                                        <img src={previewUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4"
+                                             style="max-height: 50vh; width: auto; object-fit: contain"/>
+                                    {/if}
+                                    {#if fileName}
+                                        <span class="text-light text-opacity-75">Selected file: {fileName}</span>
+                                    {/if}
+                                </div>
                             </div>
-                        </div>
-                        <div class="row text-center justify-content-center">
+                            <div class="row text-center justify-content-center">
+                                <div class="col pe-0 pe-sm-1 mb-2 mb-sm-auto">
+                                    <button type="reset" class="btn btn-danger w-100"
+                                            on:click={() => {fileName = ''; previewUrl = ''}}>
+                                        <RotateCcw/>
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div class="col ps-1 ps-sm-1">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <ImageUp/>
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-12 mt-2 collapse" id="editDescription">
+                    <div class="card card-body">
+                        <Editor {conf}
+                                scriptSrc="../../../tinymce/tinymce.min.js"
+                                bind:value={editorContent}
+                        />
+                        <!-- Reset and save buttons -->
+                        <div class="row text-center justify-content-center mt-2">
                             <div class="col pe-0 pe-sm-1 mb-2 mb-sm-auto">
-                                <button type="reset" class="btn btn-danger w-100" on:click={() => {fileName = ''; previewUrl = ''}}><RotateCcw /> Cancel</button>
+                                <button type="reset" class="btn btn-danger w-100"
+                                        on:click={() => {editorContent = ''}}>
+                                    <RotateCcw/>
+                                    Reset
+                                </button>
                             </div>
                             <div class="col ps-1 ps-sm-1">
-                                <button type="submit" class="btn btn-primary w-100"><ImageUp /> Submit</button>
+                                <button type="button" class="btn btn-primary w-100"
+                                        on:click={handleDescriptionEdit}>
+                                    <ImageUp/>
+                                    Save
+                                </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-12 mt-2">
-            <div class="collapse" id="editDescription">
-                <div class="card card-body">
-                    <Editor {conf}
-                            scriptSrc="../../../tinymce/tinymce.min.js"
-                            bind:value={editorContent}
-                    />
-                    <!-- Reset and save buttons -->
-                    <div class="row text-center justify-content-center mt-2">
-                        <div class="col pe-0 pe-sm-1 mb-2 mb-sm-auto">
-                            <button type="reset" class="btn btn-danger w-100" on:click={() => {editorContent = ''}}><RotateCcw /> Reset</button>
-                        </div>
-                        <div class="col ps-1 ps-sm-1">
-                            <button type="button" class="btn btn-primary w-100" on:click={handleDescriptionEdit}><ImageUp /> Save</button>
+            <hr class="my-4">
+            <!-- Comic Deletion -->
+            <div class="row mt-2">
+                <div class="col">
+                    <button class="btn btn-outline-danger w-100" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#deleteComic" aria-expanded="false" aria-controls="deleteComic">
+                        <Trash2/>
+                        Delete Comic
+                        <ChevronDown/>
+                    </button>
+                </div>
+                <div class="col-12 mt-2">
+                    <div class="collapse" id="deleteComic">
+                        <div class="card card-body bg-danger bg-opacity-25">
+                            <p class="text-center text-danger-emphasis">Are you sure you want to delete this comic?</p>
+                            <div class="row text-center justify-content-center mt-2">
+                                <div class="col pe-0 pe-sm-1 mb-2 mb-sm-auto">
+                                    <button class="btn btn-outline-danger w-100" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#deleteComic" aria-expanded="false"
+                                            aria-controls="deleteComic">
+                                        <RotateCcw/>
+                                        Cancel
+                                    </button>
+                                </div>
+                                <div class="col ps-1 ps-sm-1">
+                                    <button class="btn btn-danger w-100" on:click={handleComicDelete}>
+                                        <Trash2/>
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Comic Deletion -->
-    <div class="row mt-2">
-        <div class="col">
-            <button class="btn btn-outline-danger w-100" type="button" data-bs-toggle="collapse" data-bs-target="#deleteComic" aria-expanded="false" aria-controls="deleteComic">
-                <Trash2 /> Delete Comic <ChevronDown />
-            </button>
-        </div>
-        <div class="col-12 mt-2">
-            <div class="collapse" id="deleteComic">
-                <div class="card card-body bg-danger bg-opacity-25">
-                    <p class="text-center text-danger-emphasis">Are you sure you want to delete this comic?</p>
-                    <div class="row text-center justify-content-center mt-2">
-                        <div class="col pe-0 pe-sm-1 mb-2 mb-sm-auto">
-                            <button class="btn btn-outline-danger w-100" type="button" data-bs-toggle="collapse" data-bs-target="#deleteComic" aria-expanded="false" aria-controls="deleteComic"><RotateCcw /> Cancel</button>
-                        </div>
-                        <div class="col ps-1 ps-sm-1">
-                            <button class="btn btn-danger w-100" on:click={handleComicDelete}><Trash2 /> Delete</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <!-- Pages -->
     <div class="row mt-2" use:autoAnimate>
         <div class="col-12 mb-2">
