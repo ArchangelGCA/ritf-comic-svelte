@@ -80,8 +80,10 @@
                     </button>
                 </div>
                 <!-- Collapsed description -->
-                <div class="collapse col-12 justify-content-center bg-light bg-opacity-10 rounded-4 pt-3 mt-2" id="collapseDescription">
-                    {@html comic.description}
+                <div class="collapse col-12 justify-content-center bg-light bg-opacity-10 rounded-4 mt-2" id="collapseDescription">
+                    <div class="pt-3">
+                        {@html comic.description}
+                    </div>
                 </div>
             </div>
         {/if}

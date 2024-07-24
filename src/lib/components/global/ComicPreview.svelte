@@ -2,7 +2,7 @@
     export let comic;
 </script>
 
-<div class="col-12 col-md-6 my-1">
+<div class="col-12 col-md-6 my-1 shadow-sm">
     <a href="{comic.id}" class="text-decoration-none">
         <div class="card comic rounded-4">
             <img src={comic.coverUrl} class="card-img-top rounded-4" alt={comic.cover} data-bs-toggle="tooltip" title={comic.title}>

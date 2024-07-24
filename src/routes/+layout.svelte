@@ -81,11 +81,13 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body border-top border-light-subtle">
-        <!-- Collapsed Comics with button to open collapsed (not an accordion) -->
+        <!-- Comics -->
         <div class="row">
             <!-- Homepage -->
             <div class="col-12 mb-2">
-                <a href="/" class="btn btn-custom w-100" title="Home"><House /> Home</a>
+                <a href="/" class="btn btn-custom w-100" title="Home">
+                    <House /> Home
+                </a>
             </div>
             <div class="col-12">
                 <button class="btn btn-custom w-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapseComics" aria-expanded="false" aria-controls="collapseComics">
@@ -94,10 +96,14 @@
             </div>
         </div>
         <!-- Collapsed Comics -->
-        <div class="collapse row justify-content-center bg-light bg-opacity-10 rounded-4 py-2 mx-auto mt-2" id="collapseComics">
-            {#each comics as comic (comic.id)}
-                <ComicPreview {comic} />
-            {/each}
+        <div class="collapse row bg-light bg-opacity-10 rounded-4 mx-auto mt-2" id="collapseComics">
+            <div class="col py-2">
+                <div class="row justify-content-center">
+                    {#each comics as comic (comic.id)}
+                        <ComicPreview {comic} />
+                    {/each}
+                </div>
+            </div>
         </div>
     </div>
 </div>
