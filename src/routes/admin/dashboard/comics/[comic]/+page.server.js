@@ -51,7 +51,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -108,7 +108,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -165,7 +165,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -222,7 +222,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -279,7 +279,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -336,7 +336,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -393,7 +393,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -450,7 +450,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -507,7 +507,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }
@@ -551,7 +551,7 @@ export const actions = {
             return {
                 status: 401,
                 body: {
-                    message: 'You need to be logged in to create a page'
+                    message: 'You need to be logged in to do this action'
                 }
             }
         }

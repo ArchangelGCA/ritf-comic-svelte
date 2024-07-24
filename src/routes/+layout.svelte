@@ -24,7 +24,6 @@
 
     onNavigate(() => {
         if (browser) {
-            console.log('Navigating...');
             initAndCloseTooltips();
             initAndCloseOffcanvas();
         }

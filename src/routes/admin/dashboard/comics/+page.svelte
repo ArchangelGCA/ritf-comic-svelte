@@ -182,7 +182,7 @@
 
 <div class="container">
     <!-- Title -->
-    <div class="row mt-2">
+    <div class="row mt-2 mt-md-3">
         <div class="col">
             <p class="h1 text-center">Comics</p>
         </div>
@@ -243,8 +243,14 @@
             </div>
         </div>
     </div>
+    <!-- Tip -->
+    <div class="row mt-2">
+        <div class="col">
+            <p class="text-center text-muted">🚀 Drag and drop to reorder comics.</p>
+        </div>
+    </div>
     <!-- Comics -->
-    <div class="row mt-2" use:dndzone={{ items: comics}} on:consider={handleDndMoveEvent} on:finalize={handleDndEvent}>
+    <div class="row mt-md-2" use:dndzone={{ items: comics}} on:consider={handleDndMoveEvent} on:finalize={handleDndEvent}>
         {#each comics as comic (comic.id)}
             <Comic {comic} />
         {/each}

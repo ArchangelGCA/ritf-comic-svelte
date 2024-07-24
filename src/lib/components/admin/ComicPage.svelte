@@ -131,7 +131,7 @@
 </script>
 
 <!-- open offcanvas on div card click -->
-<div class="col-12 col-md-6 col-lg-4 col-xl-3" data-id={page.id}>
+<div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-2 mb-md-auto" data-id={page.id}>
     <a class="text-decoration-none" data-bs-toggle="offcanvas" href="#editPage{page.id}" role="button"
        aria-controls="editPage{page.id}">
         <div class="card bg-dark bg-opacity-10 page">

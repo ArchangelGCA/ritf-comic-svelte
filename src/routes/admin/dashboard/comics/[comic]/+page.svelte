@@ -5,7 +5,17 @@
     import {deserialize} from "$app/forms";
     import Editor from '@tinymce/tinymce-svelte';
     import {dndzone} from "svelte-dnd-action";
-    import {ChevronDown, FilePlus2, Images, ImageUp, RotateCcw, Trash2} from "lucide-svelte";
+    import {
+        ChevronDown,
+        FilePlus2,
+        Images,
+        ImageUp,
+        NotebookText,
+        Pencil,
+        RotateCcw,
+        Save,
+        Trash2
+    } from "lucide-svelte";
     import ComicPage from "$lib/components/admin/ComicPage.svelte";
 
     export let data;
@@ -68,7 +78,9 @@
             });
         },
     };
+
     let editorContent = comic.description;
+    let editingTitle = false;
 
     let isActionActive = false;
     let isDragging = false;
@@ -212,9 +224,41 @@
         isActionActive = false;
     }
 
+    async function handleTitleEdit(e){
+        e.preventDefault();
+        if (isActionActive) return;
+
+        isActionActive = true;
+
+        const formData = new FormData(e.target);
+        formData.append('comic', comic.id);
+
+        toast.info('Editing title...');
+
+        const response = await fetch('?/edit_title', {
+            method: 'POST',
+            body: formData
+        });
+
+        const result = deserialize(await response.text());
+        if (result.type === 'success') {
+            if (result.data.status === 200 || result.data.status === 303) {
+                toast.success(result.data.body.message);
+                editingTitle = false;
+                await invalidateAll();
+            } else {
+                toast.warning(result.data.body.message);
+            }
+        } else {
+            toast.error('Something went wrong...');
+        }
+
+        isActionActive = false;
+    }
+
     async function handleSaveOrder() {
         // Changes order appropriately
-        const newPages = pages.map((page, index) => ({ ...page, order: pages.length - index }));
+        const newPages = pages.map((page, index) => ({...page, order: pages.length - index}));
 
         toast.info('Saving order...');
 
@@ -356,12 +400,12 @@
         }
     }
 
-    function handleDndEvent({ detail: { items } }) {
+    function handleDndEvent({detail: {items}}) {
         pages = items;
         handleSaveOrder();
     }
 
-    function handleDndMoveEvent({ detail: { items } }) {
+    function handleDndMoveEvent({detail: {items}}) {
         pages = items;
     }
 
@@ -391,9 +435,29 @@
 
 <div class="container pb-2">
     <!-- Title -->
-    <div class="row mt-3">
+    <div class="row my-3 my-md-4">
         <div class="col">
-            <p class="h1 text-center">Title: {comic.title}</p>
+            <div class="d-flex justify-content-center align-items-center" use:autoAnimate>
+                <p class="h1 mb-0">Title:</p>
+                {#if editingTitle}
+                    <!-- Editing title form -->
+                    <form action="?/edit_title" method="POST" on:submit={handleTitleEdit} class="d-flex ms-2">
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-lg bg-dark bg-opacity-50"
+                                   placeholder="Title" name="title" value={comic.title} required/>
+                            <button class="btn btn-primary" type="submit">
+                                <Save />
+                            </button>
+                        </div>
+                    </form>
+                {:else}
+                    <p class="h1 mb-0 ms-2">{comic.title}</p>
+                {/if}
+                <!-- Edit title button -->
+                <button class="btn btn-custom text-warning-emphasis ms-2" type="button" on:click={() => editingTitle = !editingTitle}>
+                    <Pencil />
+                </button>
+            </div>
         </div>
     </div>
     <!-- Cover and Banner -->
@@ -508,11 +572,11 @@
                         <ChevronDown/>
                     </button>
                 </div>
-                <!-- Comid Description editor button -->
+                <!-- Comic Description editor button -->
                 <div class="col-12 col-md-6 mt-2 mt-md-auto">
                     <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse"
                             data-bs-target="#editDescription" aria-expanded="false" aria-controls="editDescription">
-                        <Images/>
+                        <NotebookText />
                         Comic Description
                         <ChevronDown/>
                     </button>
@@ -626,11 +690,10 @@
             </div>
         </div>
     </div>
-
-    <!-- Pages -->
-    <div class="row mt-2" use:autoAnimate>
-        <div class="col-12 mb-2">
-            <p class="h3 text-center">Pages:</p>
+    <!-- Pages Title -->
+    <div class="row mt-3" use:autoAnimate>
+        <div class="col-12">
+            <p class="h3 text-center mb-0">Pages:</p>
         </div>
         {#if pages.length === 0}
             <div class="col">
@@ -638,6 +701,13 @@
             </div>
         {/if}
     </div>
+    <!-- Tip -->
+    <div class="row mb-2">
+        <div class="col">
+            <p class="text-center text-light text-opacity-75">🚀 Drag and drop to reorder pages.</p>
+        </div>
+    </div>
+    <!-- Pages -->
     <div class="row" use:dndzone={{ items: pages }} on:consider={handleDndMoveEvent} on:finalize={handleDndEvent}>
         {#each pages as page (page.id)}
             <ComicPage {page} on:reload={() => invalidateAll()}/>
