@@ -39,7 +39,7 @@ export const load = async ({ params, url, locals: { pocketbase } }) => {
     // Fetch Comic Pages
     const pageData = await pocketbase.collection('pages').getFullList({
         filter: 'comic="' + comicData.id + '"',
-        sort: '+order, +created',
+        sort: '-order, -created',
     });
 
     let page = {};
