@@ -2,7 +2,7 @@
     export let comic;
 </script>
 
-<div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-2">
+<div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-2" data-id={comic.id}>
     <a href="comics/{comic.id}" class="text-decoration-none">
         <div class="card comic rounded-4">
             <img src={comic.coverUrl} class="card-img-top rounded-top-4" alt={comic.cover}>

@@ -131,7 +131,7 @@
 </script>
 
 <!-- open offcanvas on div card click -->
-<div class="col-12 col-md-6 col-lg-4 col-xl-3">
+<div class="col-12 col-md-6 col-lg-4 col-xl-3" data-id={page.id}>
     <a class="text-decoration-none" data-bs-toggle="offcanvas" href="#editPage{page.id}" role="button"
        aria-controls="editPage{page.id}">
         <div class="card bg-dark bg-opacity-10 page">
@@ -141,63 +141,64 @@
             </div>
         </div>
     </a>
-</div>
-
-<!-- offcanvas -->
-<div class="offcanvas offcanvas-end" data-bs-backdrop="false" tabindex="-1" id="editPage{page.id}">
-    <div class="offcanvas-header">
-        <h5 id="editPage{page.id}Label" class="offcanvas-title"><FilePenLine /> Edit Page</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        <!-- Delete Page -->
-        <div class="row">
-            <div class="col-12">
-                <!-- Delete Page button -->
-                <button class="btn btn-danger w-100" type="button" on:click={handlePageDelete}><Trash2 /> Delete Page</button>
-            </div>
-            <!-- Dropzone to change image -->
-            <div class="col-12 mt-2">
-                <div class="card card-body">
-                    <!-- Pages Form -->
-                    <form action="?/create" method="POST" enctype="multipart/form-data"
-                          on:submit={handlePageImageEdit}>
-                        <div class="mb-3">
-                            <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
-                                 style="min-height: 15vh"
-                                 on:dragover={handleDragOver}
-                                 on:drop={handleDrop}
-                                 on:dragenter={handleDragEnter}
-                                 on:dragleave={handleDragLeave}
-                                 class:dragging={isDragging}
-                                 role="button" aria-label="File upload drop zone" tabindex="0">
-                                <label for="file" class="form-label" title="image"> Image</label>
-                                <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
-                                       id="image{page.id}" name="image" accept="image/*"
-                                       on:change={event => loadImagePreview(event)} required/>
-                                {#if previewUrl}
-                                    <img src={previewUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4"
-                                         style="max-height: 50vh; width: auto; object-fit: contain"/>
-                                {/if}
-                                {#if fileName}
-                                    <span class="text-light text-opacity-75">Selected file: {fileName}</span>
-                                {/if}
+    <!-- offcanvas -->
+    <div class="offcanvas offcanvas-end" data-bs-backdrop="false" tabindex="-1" id="editPage{page.id}">
+        <div class="offcanvas-header">
+            <h5 id="editPage{page.id}Label" class="offcanvas-title"><FilePenLine /> Edit Page</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <!-- Delete Page -->
+            <div class="row">
+                <div class="col-12">
+                    <!-- Delete Page button -->
+                    <button class="btn btn-danger w-100" type="button" on:click={handlePageDelete}><Trash2 /> Delete Page</button>
+                </div>
+                <!-- Dropzone to change image -->
+                <div class="col-12 mt-2">
+                    <div class="card card-body">
+                        <!-- Pages Form -->
+                        <form action="?/create" method="POST" enctype="multipart/form-data"
+                              on:submit={handlePageImageEdit}>
+                            <div class="mb-3">
+                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
+                                     style="min-height: 15vh"
+                                     on:dragover={handleDragOver}
+                                     on:drop={handleDrop}
+                                     on:dragenter={handleDragEnter}
+                                     on:dragleave={handleDragLeave}
+                                     class:dragging={isDragging}
+                                     role="button" aria-label="File upload drop zone" tabindex="0">
+                                    <label for="file" class="form-label" title="image"> Image</label>
+                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
+                                           id="image{page.id}" name="image" accept="image/*"
+                                           on:change={event => loadImagePreview(event)} required/>
+                                    {#if previewUrl}
+                                        <img src={previewUrl} alt="Preview" class="img-thumbnail mt-2 mb-2 rounded-4"
+                                             style="max-height: 50vh; width: auto; object-fit: contain"/>
+                                    {/if}
+                                    {#if fileName}
+                                        <span class="text-light text-opacity-75">Selected file: {fileName}</span>
+                                    {/if}
+                                </div>
                             </div>
-                        </div>
-                        <div class="row text-center justify-content-center">
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary w-100">
-                                    <ImageUp/>
-                                    Save
-                                </button>
+                            <div class="row text-center justify-content-center">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <ImageUp/>
+                                        Save
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <style>
     .page {

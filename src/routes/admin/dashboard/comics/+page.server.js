@@ -83,5 +83,62 @@ export const actions = {
                 message: 'Comic created successfully!'
             }
         }
-    }
+    },
+    edit_order: async ({request, locals: { pocketbase, user }}) => {
+        const formData = Object.fromEntries(await request.formData());
+        const {comic, order} = formData;
+
+        if (!user) {
+            return {
+                status: 401,
+                body: {
+                    message: 'You need to be logged in to create a page'
+                }
+            }
+        }
+
+        if (!comic) {
+            return {
+                status: 400,
+                body: {
+                    message: 'Comic is required'
+                }
+            }
+        }
+
+        if (!order) {
+            return {
+                status: 400,
+                body: {
+                    message: 'Order is required'
+                }
+            }
+        }
+
+        const pbAdmin = new PocketBase(POCKETBASE_URL);
+        await pbAdmin.admins.authWithPassword(POCKETBASE_EMAIL, POCKETBASE_PSW);
+
+        const data = {
+            order
+        }
+
+        try {
+            await pbAdmin.collection('comics').update(comic, data);
+        } catch (e) {
+            console.error(e);
+            return {
+                status: 500,
+                body: {
+                    message: e.message
+                }
+            }
+        }
+
+        return {
+            status: 200,
+            body: {
+                message: 'Comic order updated successfully'
+            }
+        }
+    },
 }

@@ -4,6 +4,7 @@
     import {goto, invalidateAll} from "$app/navigation";
     import {deserialize} from "$app/forms";
     import Editor from '@tinymce/tinymce-svelte';
+    import {dndzone} from "svelte-dnd-action";
     import {ChevronDown, FilePlus2, Images, ImageUp, RotateCcw, Trash2} from "lucide-svelte";
     import ComicPage from "$lib/components/admin/ComicPage.svelte";
 
@@ -211,6 +212,38 @@
         isActionActive = false;
     }
 
+    async function handleSaveOrder() {
+        // Changes order appropriately
+        const newPages = pages.map((page, index) => ({ ...page, order: pages.length - index }));
+
+        toast.info('Saving order...');
+
+        const promises = newPages.map(async page => {
+            const formData = new FormData();
+            formData.append('page', page.id);
+            formData.append('order', page.order);
+
+            return fetch('?/edit_page_order', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+                .then(text => deserialize(text));
+        });
+
+        const results = await Promise.all(promises);
+
+        const failedResult = results.find(result => result.type !== 'success' || result.data.status !== 200);
+
+        if (failedResult) {
+            const errorMessage = failedResult.type !== 'success' ? 'Something went wrong...' : failedResult.data.body.message;
+            toast.error(errorMessage);
+        } else {
+            toast.success('Order saved successfully!');
+        }
+
+        await invalidateAll();
+    }
+
     async function handleComicDelete() {
         if (isActionActive) return;
 
@@ -323,6 +356,15 @@
         }
     }
 
+    function handleDndEvent({ detail: { items } }) {
+        pages = items;
+        handleSaveOrder();
+    }
+
+    function handleDndMoveEvent({ detail: { items } }) {
+        pages = items;
+    }
+
     function loadImagePreview(event, type) {
         const file = event.target.files[0];
         if (file) {
@@ -349,7 +391,7 @@
 
 <div class="container pb-2">
     <!-- Title -->
-    <div class="row mt-2">
+    <div class="row mt-3">
         <div class="col">
             <p class="h1 text-center">Title: {comic.title}</p>
         </div>
@@ -446,6 +488,7 @@
             </div>
         </div>
     </div>
+    <!-- Page Creation -->
     <div class="row bg-light bg-opacity-10 pt-2 pb-3 rounded-4">
         <div class="col">
             <!-- Section title (actions) -->
@@ -594,6 +637,8 @@
                 <p class="text-center text-light text-opacity-75">No pages found...</p>
             </div>
         {/if}
+    </div>
+    <div class="row" use:dndzone={{ items: pages }} on:consider={handleDndMoveEvent} on:finalize={handleDndEvent}>
         {#each pages as page (page.id)}
             <ComicPage {page} on:reload={() => invalidateAll()}/>
         {/each}

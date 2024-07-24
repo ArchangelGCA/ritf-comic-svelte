@@ -1,10 +1,10 @@
 <script>
     import {deserialize} from "$app/forms";
-    import autoAnimate from "@formkit/auto-animate";
     import {invalidateAll} from "$app/navigation";
     import {toast} from "svelte-sonner";
     import {BookPlus, ChevronDown, ImageUp} from "lucide-svelte";
     import Comic from "$lib/components/admin/Comic.svelte";
+    import {dndzone} from "svelte-dnd-action";
 
     export let data;
     let { comics } = data;
@@ -54,6 +54,38 @@
         }
 
         isCreating = false;
+    }
+
+    async function handleSaveOrder() {
+        // Changes order appropriately
+        const newComics = comics.map((comic, index) => ({ ...comic, order: comics.length - index }));
+
+        toast.info('Saving order...');
+
+        const promises = newComics.map(async comic => {
+            const formData = new FormData();
+            formData.append('comic', comic.id);
+            formData.append('order', comic.order);
+
+            return fetch('?/edit_order', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+                .then(text => deserialize(text));
+        });
+
+        const results = await Promise.all(promises);
+
+        const failedResult = results.find(result => result.type !== 'success' || result.data.status !== 200);
+
+        if (failedResult) {
+            const errorMessage = failedResult.type !== 'success' ? 'Something went wrong...' : failedResult.data.body.message;
+            toast.error(errorMessage);
+        } else {
+            toast.success('Order saved successfully!');
+        }
+
+        await invalidateAll();
     }
 
     // DragEvents (Dropzone)
@@ -112,6 +144,15 @@
             // Set the files to the input
             document.getElementById('banner').files = files;
         }
+    }
+
+    function handleDndEvent({ detail: { items } }) {
+        comics = items;
+        handleSaveOrder();
+    }
+
+    function handleDndMoveEvent({ detail: { items } }) {
+        comics = items;
     }
 
     function loadImagePreview(event) {
@@ -203,7 +244,7 @@
         </div>
     </div>
     <!-- Comics -->
-    <div class="row mt-2" use:autoAnimate>
+    <div class="row mt-2" use:dndzone={{ items: comics}} on:consider={handleDndMoveEvent} on:finalize={handleDndEvent}>
         {#each comics as comic (comic.id)}
             <Comic {comic} />
         {/each}
