@@ -224,7 +224,7 @@
         isActionActive = false;
     }
 
-    async function handleTitleEdit(e){
+    async function handleTitleEdit(e) {
         e.preventDefault();
         if (isActionActive) return;
 
@@ -446,7 +446,7 @@
                             <input type="text" class="form-control form-control-lg bg-dark bg-opacity-50"
                                    placeholder="Title" name="title" value={comic.title} required/>
                             <button class="btn btn-primary" type="submit">
-                                <Save />
+                                <Save/>
                             </button>
                         </div>
                     </form>
@@ -454,14 +454,15 @@
                     <p class="h1 mb-0 ms-2">{comic.title}</p>
                 {/if}
                 <!-- Edit title button -->
-                <button class="btn btn-custom text-warning-emphasis ms-2" type="button" on:click={() => editingTitle = !editingTitle}>
-                    <Pencil />
+                <button class="btn btn-custom text-warning-emphasis ms-2" type="button"
+                        on:click={() => editingTitle = !editingTitle}>
+                    <Pencil/>
                 </button>
             </div>
         </div>
     </div>
     <!-- Cover and Banner -->
-    <div class="row mt-2">
+    <div class="row mt-2 mb-2">
         <!-- Cover and Banner button -->
         <div class="col">
             <button class="btn btn-outline-primary w-100" type="button" data-bs-toggle="collapse"
@@ -472,81 +473,79 @@
             </button>
         </div>
         <!-- Cover and Banner -->
-        <div class="col-12 mt-2">
-            <div class="collapse" id="coverBanner">
-                <div class="row">
-                    <!-- Cover -->
-                    <div class="col-12 col-md-6">
-                        <div class="card card-body">
-                            <form action="?/edit_cover" method="POST" enctype="multipart/form-data"
-                                  on:submit={handleCoverEdit}>
-                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
-                                     id="coverDropzone"
-                                     style="min-height: 15vh"
-                                     on:dragover={handleDragOver}
-                                     on:drop={handleDrop}
-                                     on:dragenter={handleDragEnter}
-                                     on:dragleave={handleDragLeave}
-                                     class:dragging={isDraggingCover}
-                                     role="button" aria-label="Cover upload drop zone" tabindex="0">
-                                    <label for="cover" class="form-label h4 text-center" title="cover">Cover</label>
-                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
-                                           id="cover" name="cover" accept="image/*"
-                                           on:change={event => loadImagePreview(event, 'cover')} required/>
-                                    {#if previewCoverUrl}
-                                        <img src={previewCoverUrl} alt="Preview"
-                                             class="img-thumbnail mt-2 mb-2 rounded-4"
-                                             style="max-height: 50vh; width: auto; object-fit: contain"/>
-                                    {/if}
-                                    {#if fileNameCoverUrl}
-                                        <span class="text-light text-opacity-75">Selected file: {fileNameCoverUrl}</span>
-                                    {/if}
-                                </div>
-                                <!-- Submit button -->
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary w-100">
-                                        <ImageUp/>
-                                        Save Cover
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+        <div class="col-12 mt-2 collapse" id="coverBanner">
+            <div class="row">
+                <!-- Cover -->
+                <div class="col-12 col-md-6">
+                    <div class="card card-body">
+                        <form action="?/edit_cover" method="POST" enctype="multipart/form-data"
+                              on:submit={handleCoverEdit}>
+                            <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
+                                 id="coverDropzone"
+                                 style="min-height: 15vh"
+                                 on:dragover={handleDragOver}
+                                 on:drop={handleDrop}
+                                 on:dragenter={handleDragEnter}
+                                 on:dragleave={handleDragLeave}
+                                 class:dragging={isDraggingCover}
+                                 role="button" aria-label="Cover upload drop zone" tabindex="0">
+                                <label for="cover" class="form-label h4 text-center" title="cover">Cover</label>
+                                <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
+                                       id="cover" name="cover" accept="image/*"
+                                       on:change={event => loadImagePreview(event, 'cover')} required/>
+                                {#if previewCoverUrl}
+                                    <img src={previewCoverUrl} alt="Preview"
+                                         class="img-thumbnail mt-2 mb-2 rounded-4"
+                                         style="max-height: 50vh; width: auto; object-fit: contain"/>
+                                {/if}
+                                {#if fileNameCoverUrl}
+                                    <span class="text-light text-opacity-75">Selected file: {fileNameCoverUrl}</span>
+                                {/if}
+                            </div>
+                            <!-- Submit button -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <ImageUp/>
+                                    Save Cover
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <!-- Banner -->
-                    <div class="col-12 col-md-6">
-                        <div class="card card-body">
-                            <form action="?/edit_banner" method="POST" enctype="multipart/form-data"
-                                  on:submit={handleBannerEdit}>
-                                <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
-                                     id="bannerDropzone" style="min-height: 15vh"
-                                     on:dragover={handleDragOver}
-                                     on:drop={handleDrop}
-                                     on:dragenter={handleDragEnter}
-                                     on:dragleave={handleDragLeave}
-                                     class:dragging={isDraggingBanner}
-                                     role="button" aria-label="Banner upload drop zone" tabindex="0">
-                                    <label for="banner" class="form-label h4 text-center" title="banner">Banner</label>
-                                    <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
-                                           id="banner" name="banner" accept="image/*"
-                                           on:change={event => loadImagePreview(event, 'banner')} required/>
-                                    {#if previewBannerUrl}
-                                        <img src={previewBannerUrl} alt="Preview"
-                                             class="img-thumbnail mt-2 mb-2 rounded-4"
-                                             style="max-height: 50vh; width: auto; object-fit: contain"/>
-                                    {/if}
-                                    {#if fileNameBannerUrl}
-                                        <span class="text-light text-opacity-75">Selected file: {fileNameBannerUrl}</span>
-                                    {/if}
-                                </div>
-                                <!-- Submit button -->
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary w-100">
-                                        <ImageUp/>
-                                        Save Banner
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
+                </div>
+                <!-- Banner -->
+                <div class="col-12 col-md-6">
+                    <div class="card card-body">
+                        <form action="?/edit_banner" method="POST" enctype="multipart/form-data"
+                              on:submit={handleBannerEdit}>
+                            <div class="mb-3 dropzone border border-2 border-dark-subtle p-3 px-2 px-md-3 rounded-3 d-flex flex-column justify-content-center drop-zone"
+                                 id="bannerDropzone" style="min-height: 15vh"
+                                 on:dragover={handleDragOver}
+                                 on:drop={handleDrop}
+                                 on:dragenter={handleDragEnter}
+                                 on:dragleave={handleDragLeave}
+                                 class:dragging={isDraggingBanner}
+                                 role="button" aria-label="Banner upload drop zone" tabindex="0">
+                                <label for="banner" class="form-label h4 text-center" title="banner">Banner</label>
+                                <input class="form-control form-control-lg bg-dark bg-opacity-50 mb-2" type="file"
+                                       id="banner" name="banner" accept="image/*"
+                                       on:change={event => loadImagePreview(event, 'banner')} required/>
+                                {#if previewBannerUrl}
+                                    <img src={previewBannerUrl} alt="Preview"
+                                         class="img-thumbnail mt-2 mb-2 rounded-4"
+                                         style="max-height: 50vh; width: auto; object-fit: contain"/>
+                                {/if}
+                                {#if fileNameBannerUrl}
+                                    <span class="text-light text-opacity-75">Selected file: {fileNameBannerUrl}</span>
+                                {/if}
+                            </div>
+                            <!-- Submit button -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <ImageUp/>
+                                    Save Banner
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -576,7 +575,7 @@
                 <div class="col-12 col-md-6 mt-2 mt-md-auto">
                     <button class="btn btn-outline-secondary w-100" type="button" data-bs-toggle="collapse"
                             data-bs-target="#editDescription" aria-expanded="false" aria-controls="editDescription">
-                        <NotebookText />
+                        <NotebookText/>
                         Comic Description
                         <ChevronDown/>
                     </button>
