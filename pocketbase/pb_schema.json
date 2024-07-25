@@ -1,0 +1,286 @@
+[
+  {
+    "id": "_pb_users_auth_",
+    "name": "users",
+    "type": "auth",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "users_name",
+        "name": "name",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "users_avatar",
+        "name": "avatar",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": [
+            "image/jpeg",
+            "image/png",
+            "image/svg+xml",
+            "image/gif",
+            "image/webp"
+          ],
+          "thumbs": null,
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "protected": false
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "id = @request.auth.id",
+    "viewRule": "id = @request.auth.id",
+    "createRule": null,
+    "updateRule": "id = @request.auth.id",
+    "deleteRule": "id = @request.auth.id",
+    "options": {
+      "allowEmailAuth": true,
+      "allowOAuth2Auth": true,
+      "allowUsernameAuth": true,
+      "exceptEmailDomains": null,
+      "manageRule": null,
+      "minPasswordLength": 8,
+      "onlyEmailDomains": null,
+      "onlyVerified": false,
+      "requireEmail": false
+    }
+  },
+  {
+    "id": "62rininpxbo9llu",
+    "name": "comics",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "pdmkjtyr",
+        "name": "title",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "tooep2ar",
+        "name": "description",
+        "type": "editor",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "convertUrls": false
+        }
+      },
+      {
+        "system": false,
+        "id": "s8dsct2z",
+        "name": "owner",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "r5indawh",
+        "name": "cover",
+        "type": "file",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": [],
+          "thumbs": [
+            "500x0"
+          ],
+          "maxSelect": 1,
+          "maxSize": 20971520,
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "ktouqyuf",
+        "name": "banner",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": [],
+          "thumbs": [
+            "500x0"
+          ],
+          "maxSelect": 1,
+          "maxSize": 20971520,
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "0ost60cr",
+        "name": "order",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": true
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "solpcymyxlphqq8",
+    "name": "pages",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "n2iolloc",
+        "name": "comic",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "62rininpxbo9llu",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "bfkwl6dl",
+        "name": "image",
+        "type": "file",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": [
+            "image/avif",
+            "image/heif",
+            "image/tiff",
+            "image/webp",
+            "image/gif",
+            "image/jpeg",
+            "image/png"
+          ],
+          "thumbs": [
+            "500x0"
+          ],
+          "maxSelect": 1,
+          "maxSize": 15728640,
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "4jrywgyt",
+        "name": "order",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": true
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "zryrr5dsmofvpoa",
+    "name": "settings",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "gyxspzlm",
+        "name": "owner",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "_pb_users_auth_",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "ba5bsi2m",
+        "name": "title",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  }
+]

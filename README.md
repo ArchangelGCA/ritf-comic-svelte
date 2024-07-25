@@ -33,10 +33,12 @@ You can preview the production build with `npm run preview`.
 
 ## Installation:
 
-You'll need to install **PocketBase** and edit the `.env.example` file accordingly (read comments).
+- Install **PocketBase**, edit `.env.example` file accordingly (read comments) and rename it to `.env`.
 <br>
-We commend using `Coolify` to host SvelteKit and Pocketbase projects.
+- We commend using `Coolify` to host SvelteKit and Pocketbase projects.
+<br>
+- Add collections to pocketbase: `import collections` to your pocketbase `dashboard -> Settings -> Sync -> Import collections -> Load from JSON file` and select the `pb_schema.json` on this repository from the `/pocketbase` folder.
 
 ## Theming:
 
-You can customize theming by editing the `src/css/theme.css` file.
+You can customize theming by editing `src/css/theme.css` file _(Limited customization available)_.
