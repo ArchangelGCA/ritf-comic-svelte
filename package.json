@@ -25,6 +25,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@rodneylab/svelte-social-icons": "^0.0.30",
 		"@tinymce/tinymce-svelte": "^3.0.0"
 	}
 }

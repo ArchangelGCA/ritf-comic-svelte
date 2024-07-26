@@ -1,6 +1,7 @@
 <script>
     import {deserialize} from "$app/forms";
     import {goto} from "$app/navigation";
+    import Seo from "sk-seo";
 
     let loginActive = false;
     let statusMessage = "";
@@ -40,6 +41,12 @@
         loginActive = false;
     }
 </script>
+
+<Seo
+        title="Admin Login"
+        description="Login to the admin panel"
+        index={false}
+/>
 
 <!-- Login Page -->
 <div class="container">

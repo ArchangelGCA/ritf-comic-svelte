@@ -17,6 +17,7 @@
         Trash2
     } from "lucide-svelte";
     import ComicPage from "$lib/components/admin/ComicPage.svelte";
+    import Seo from "sk-seo";
 
     export let data;
     let {comic, pages} = data;
@@ -432,6 +433,12 @@
         }
     }
 </script>
+
+<Seo
+        title="Admin - Comic"
+        description="Admin panel for comic management"
+        index={false}
+/>
 
 <div class="container pb-2">
     <!-- Title -->

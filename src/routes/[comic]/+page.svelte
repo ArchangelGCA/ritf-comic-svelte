@@ -13,7 +13,7 @@
 <Seo
         title="{comic.title + ' - Page ' + (!page.number ? 'Not found' : page.number)}"
         description="{page.description}"
-        index="false"
+        index={false}
 />
 
 <div class="container-fluid">

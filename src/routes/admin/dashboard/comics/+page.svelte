@@ -5,6 +5,7 @@
     import {BookPlus, ChevronDown, ImageUp} from "lucide-svelte";
     import Comic from "$lib/components/admin/Comic.svelte";
     import {dndzone} from "svelte-dnd-action";
+    import Seo from "sk-seo";
 
     export let data;
     let { comics } = data;
@@ -179,6 +180,12 @@
         }
     }
 </script>
+
+<Seo
+        title="Comics"
+        description="Manage your comics"
+        index={false}
+/>
 
 <div class="container">
     <!-- Title -->

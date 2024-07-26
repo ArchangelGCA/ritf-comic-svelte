@@ -1,11 +1,14 @@
 <script>
+    import {Info} from "lucide-svelte";
+
     export let comic;
+    export let showDescription = false;
 </script>
 
 <div class="col-12 col-md-3">
     <div class="row">
         <div class="col-12">
-            <p class="h4 text-center bg-light bg-opacity-10 py-2 rounded-4"><a class="link-light text-decoration-none" href={comic.id}>{comic.title}</a></p>
+            <p class="h4 text-center bg-light bg-opacity-10 py-2 rounded-4"><a class="link-light text-decoration-none" href={comic.id}>{comic.title}</a> </p>
         </div>
         <div class="col-12">
             <a href="{comic.id}" class="text-decoration-none">
@@ -14,11 +17,20 @@
                 </div>
             </a>
         </div>
-        <div class="col-12 mt-1">
-            <p class="text-center text-truncate bg-secondary bg-opacity-10 pt-3 rounded-4">{@html comic.description}</p>
-        </div>
+        <!-- Description -->
+        {#if showDescription}
+            <div class="col-12">
+                <button class="btn btn-custom w-100 mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescription{comic.id}" aria-expanded="false" aria-controls="collapseDescription{comic.id}">
+                    <Info /> Description
+                </button>
+            </div>
+            <div class="collapse col-12" id="collapseDescription{comic.id}">
+                <div class="card card-body bg-light bg-opacity-10 rounded-4 border-0 mt-2">
+                    <p>{@html comic.description}</p>
+                </div>
+            </div>
+        {/if}
     </div>
-
 </div>
 
 <style>
