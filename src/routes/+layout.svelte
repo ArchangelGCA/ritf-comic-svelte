@@ -9,6 +9,7 @@
     import autoAnimate from "@formkit/auto-animate";
     import Seo from "sk-seo";
     import SocialIcons from "@rodneylab/svelte-social-icons";
+    import SVGWave from "$lib/components/global/SVGWave.svelte";
 
     export let data;
     const {comics, settings} = data;
@@ -127,7 +128,8 @@
 
 <!-- Footer -->
 <div class="container-fluid">
-    <div class="row text-center justify-content-center bg-light bg-opacity-10 rounded-top border-top border-3 border-primary pt-3 pb-2">
+    <SVGWave fill="#3c1d34" data="M0 179L48 185.7C96 192.3 192 205.7 288 202.2C384 198.7 480 178.3 576 180.7C672 183 768 208 864 205.8C960 203.7 1056 174.3 1152 164.3C1248 154.3 1344 163.7 1392 168.3L1440 173L1440 281L1392 281C1344 281 1248 281 1152 281C1056 281 960 281 864 281C768 281 672 281 576 281C480 281 384 281 288 281C192 281 96 281 48 281L0 281Z" />
+    <div class="row text-center justify-content-center bg-light bg-opacity-10 pt-4 pb-2">
         <div class="col-4 col-md-auto mb-2">
             <a href="https://rosesintheflames.com/about" target="_blank" class="link-light text-decoration-none">About Us</a>
         </div>

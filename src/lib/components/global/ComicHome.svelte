@@ -5,7 +5,7 @@
     export let showDescription = false;
 </script>
 
-<div class="col-12 col-md-3">
+<div class="col-12 col-md-3 col-xxl-2 my-2">
     <div class="row">
         <div class="col-12">
             <p class="h4 text-center bg-light bg-opacity-10 py-2 rounded-4"><a class="link-light text-decoration-none" href={comic.id}>{comic.title}</a> </p>
