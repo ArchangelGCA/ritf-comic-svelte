@@ -19,8 +19,8 @@
     <meta name="robots" content="noindex, nofollow">
 </svelte:head>
 
-<div class="container">
-    <div class="row text-center bg-light bg-opacity-10 rounded-4 pt-3 pb-2 mt-3">
+<div class="container-fluid">
+    <div class="row text-center bg-light bg-opacity-10 rounded-bottom-4 pt-3 pb-2">
         <div class="col">
             <a href="/" class="link-light text-decoration-none">
                 <enhanced:img src="{favicon}" alt="Roses in The Flames icon" class="img-fluid img-brand mb-2 me-2"/>

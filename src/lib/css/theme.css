@@ -2,7 +2,7 @@
 
 /* By default, the theme is Dark-Black */
 :root {
-    --bg-color: #01130e;
+    --bg-color: #27041e;
     --text-color: #fff;
     --primary-color: #9b0eea;
     --secondary-color: #1cc3b0;
@@ -11,7 +11,7 @@
     --success-color: #0aa379;
     --warning-color: #f6ff7e;
     --error-color: #cc006b;
-    --surface-color: #01130e;
+    --surface-color: #220319;
     --btn-primary-hover: #7c0cba;
 }
 

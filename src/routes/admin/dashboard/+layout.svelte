@@ -50,7 +50,7 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 col-sm-1 bg-dark bg-opacity-25 text-white" style="min-height: 100vh;">
+        <div class="col-2 col-sm-1 bg-light bg-opacity-10 text-white" style="min-height: 100vh;">
             <div class="col-12 mt-3 text-center">
                 <a href="/admin/dashboard/" class="link-light">
                     <Shield size={sizeTitleIcon}/>
