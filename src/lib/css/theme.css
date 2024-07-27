@@ -187,6 +187,15 @@ a, .link-primary {
     color: var(--primary-color);
 }
 
+.link-light {
+    color: var(--text-color);
+    transition: all 0.3s;
+}
+
+.link-light:hover {
+    color: var(--accent-color) !important;
+}
+
 .badge-primary {
     background-color: var(--primary-color);
 }

@@ -20,7 +20,7 @@
 </svelte:head>
 
 <div class="container-fluid">
-    <div class="row text-center bg-light bg-opacity-10 rounded-bottom-4 pt-3 pb-2">
+    <div class="row text-center bg-light bg-opacity-10 rounded-bottom-4 border-bottom border-3 border-primary pt-3 pb-2">
         <div class="col">
             <a href="/" class="link-light text-decoration-none">
                 <enhanced:img src="{favicon}" alt="Roses in The Flames icon" class="img-fluid img-brand mb-2 me-2"/>
@@ -44,7 +44,7 @@
         {/if}
     </div>
     <!-- Socials -->
-    <div class="row justify-content-center pt-3 pb-3 my-3 mt-5 bg-light bg-opacity-10 rounded-4">
+    <div class="row justify-content-center pt-3 pb-3 my-5 bg-light bg-opacity-10 border-top border-bottom border-3 border-primary">
         <div class="col-12">
             <p class="h3 text-center">Follow us on social media!</p>
         </div>

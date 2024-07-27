@@ -30,7 +30,7 @@
         </div>
     </div>
     <!-- Page -->
-    <div class="container" use:autoAnimate>
+    <div class="container mb-3" use:autoAnimate>
         {#if !page || !page.imageUrl}
             <div class="row text-center justify-content-center">
                 <div class="col-12">
