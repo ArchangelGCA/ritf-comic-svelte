@@ -163,6 +163,14 @@ body {
     color: var(--text-color);
 }
 
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--accent-color);
+}
+
+.nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 .navbar, .modal-content, .card {
     background-color: var(--surface-color);
     color: var(--text-color);
