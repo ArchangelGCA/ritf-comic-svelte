@@ -95,16 +95,13 @@
         {/if}
     </div>
     <!-- Bottom offcanvas page navigation -->
-    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasPageNavigation" aria-labelledby="offcanvasPageNavigationLabel">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasPageNavigationLabel">Page navigation</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <div class="offcanvas offcanvas-bottom border-top border-primary" tabindex="-1" id="offcanvasPageNavigation" aria-labelledby="offcanvasPageNavigationLabel">
+        <div class="offcanvas-header pb-0">
+            <h5 id="offcanvasPageNavigationLabel">Page Selection</h5>
+            <button type="button" class="btn-close text-reset me-md-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div class="offcanvas-body">
+        <div class="offcanvas-body pt-1 pt-md-2">
             <div class="row">
-                <div class="col-12">
-                    <p class="h4 text-center">Select page:</p>
-                </div>
                 <div class="col-12">
                     <div class="row row-horizontal flex-nowrap justify-content-center">
                         {#each Array.from({ length: comic.pagesTotal }, (_, i) => i + 1) as pageNumber}

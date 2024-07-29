@@ -176,8 +176,14 @@
                     {/if}
                 </div>
             </div>
+            <!-- Privacy Policy and ToS -->
+            <div class="col-12 text-center mt-3">
+                <a class="link-body-emphasis text-decoration-none" href="https://rosesintheflames.com/legal/privacy-policy" target="_blank" data-bs-toggle="tooltip" title="Read Privacy Policy">Privacy Policy</a>
+                <span class="text-muted mx-2">|</span>
+                <a class="link-body-emphasis text-decoration-none" href="https://rosesintheflames.com/legal/tos" target="_blank" data-bs-toggle="tooltip" title="Read Terms of Service">Terms of Service</a>
+            </div>
             <!-- Credits -->
-            <div class="col-12 mt-3">
+            <div class="col-12 my-1">
                 <p class="text-muted mb-0">Made with ❤️ by <a class="link-light text-decoration-none"
                                                               href="https://archangelgca.eu/" target="_blank">ArchangelGCA</a>
                     for <a class="link-light text-decoration-none" href="https://rosesintheflames.com"
@@ -223,14 +229,14 @@
             <!-- Homepage -->
             <div class="col-12 mb-2">
                 <a href="/" class="btn btn-custom w-100" title="Home">
-                    <House/>
+                    <House />
                     Home
                 </a>
             </div>
             <div class="col-12">
                 <button class="btn btn-custom w-100" type="button" data-bs-toggle="collapse"
                         data-bs-target="#collapseComics" aria-expanded="false" aria-controls="collapseComics">
-                    <BookImage/>
+                    <BookImage />
                     Comics
                 </button>
             </div>
@@ -240,7 +246,7 @@
             <div class="col py-2">
                 <div class="row justify-content-center">
                     {#each comics as comic (comic.id)}
-                        <ComicPreview {comic}/>
+                        <ComicPreview {comic} />
                     {/each}
                 </div>
             </div>
