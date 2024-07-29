@@ -1,7 +1,7 @@
 <script>
     import Seo from "sk-seo";
     import autoAnimate from "@formkit/auto-animate";
-    import {ArrowLeft, ArrowRight, BookOpenText, FileWarning} from "lucide-svelte";
+    import {ArrowLeft, ArrowRight, BookOpenText, FileWarning, List} from "lucide-svelte";
 
     export let data;
     let { comic, page, settings } = data;
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <!-- Controls to go forward and back -->
-            <div class="row mt-3">
+            <div class="row mt-3 justify-content-center">
                 <div class="col-6 text-center">
                     {#if page.hasPrevious}
                         <a href="{comic.id}?page={page.number - 1}" class="btn btn-custom text-accent"><ArrowLeft /> Previous</a>
@@ -69,6 +69,12 @@
                 <div class="col-12">
                     <!-- current page / total pages -->
                     <p class="text-center text-light text-opacity-75">{page.number} / {comic.pagesTotal}</p>
+                </div>
+                <!-- Open offcanvas with page navigation -->
+                <div class="col-6 col-md-2">
+                    <button class="btn btn-custom w-100" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasPageNavigation" aria-controls="offcanvasPageNavigation">
+                        <List /> Pages
+                    </button>
                 </div>
             </div>
             <!-- Description -->
@@ -88,6 +94,29 @@
             </div>
         {/if}
     </div>
+    <!-- Bottom offcanvas page navigation -->
+    <div class="offcanvas offcanvas-bottom" tabindex="-1" id="offcanvasPageNavigation" aria-labelledby="offcanvasPageNavigationLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasPageNavigationLabel">Page navigation</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="row">
+                <div class="col-12">
+                    <p class="h4 text-center">Select page:</p>
+                </div>
+                <div class="col-12">
+                    <div class="row row-horizontal flex-nowrap justify-content-center">
+                        {#each Array.from({ length: comic.pagesTotal }, (_, i) => i + 1) as pageNumber}
+                            <div class="col-3 col-md-2 col-lg-1">
+                                <a href="{comic.id}?page={pageNumber}" class="btn btn-custom {pageNumber === page.number ? 'active' : ''} w-100">{pageNumber}</a>
+                            </div>
+                        {/each}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
@@ -106,5 +135,10 @@
         height: 100%;
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%);
         z-index: 1;
+    }
+
+    .row-horizontal {
+        overflow-x: auto;
+        white-space: nowrap;
     }
 </style>

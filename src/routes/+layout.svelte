@@ -43,8 +43,10 @@
             // clear style from body
             document.body.style = '';
         }
-        const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasNavigation'));
-        offcanvas.hide();
+        const offcanvasElementList = document.querySelectorAll('.offcanvas');
+        const offcanvasList = [...offcanvasElementList].map(offcanvasEl => new bootstrap.Offcanvas(offcanvasEl));
+        // const offcanvas = new bootstrap.Offcanvas(document.getElementById('offcanvasNavigation'));
+        offcanvasList.forEach(offcanvas => offcanvas.hide());
     }
 
     /**
